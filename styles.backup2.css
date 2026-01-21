@@ -1,0 +1,306 @@
+:root{
+  /* Your palette */
+  --ink: #0f0607;
+  --espresso: #2c1f20;
+  --ash: #4b3f3e;
+  --stone: #746a68;
+  --champagne: #96928c;
+
+  --text: rgba(245, 242, 238, .92);
+  --text-soft: rgba(245, 242, 238, .72);
+}
+
+*{ box-sizing:border-box; }
+html,body {
+  color-scheme: dark;
+  background-color: #000;
+  image-rendering: auto;
+ height:100%; }
+body{
+  margin:0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+}
+
+/* HERO */
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  isolation:isolate;
+  background: var(--ink);
+}
+
+/* LAYER 1: lace image (crisp, no dulling) */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:-6%;
+  background-image:url("./assets/baselace-srgb.png");
+  background-size:cover;
+  background-position:center;
+  filter: contrast(1.06) saturate(1.05) brightness(1.02);
+  transform: scale(1.02);
+  z-index:0;
+}
+
+/* LAYER 2: smoke drift (more noticeable + movement) */
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background-image:url("./assets/baselace-srgb.png");
+  background-size:cover;
+  background-position:center;
+  /* This combo makes the smoke feel alive without dulling everything */
+  mix-blend-mode: screen;
+  opacity: .55;
+  filter: blur(1.2px) contrast(1.15) brightness(1.12);
+  
+  animation: smokeDrift 6s ease-in-out infinite alternate;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* LAYER 3: subtle vignette + editorial depth (very light so it won’t dull) */
+.hero__vignette{
+  display:none;
+}
+
+.hero .hero__content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding: 48px 20px;
+}
+
+/* LOGO fly-in (Superman-ish) */
+.logo{
+  margin:0;
+  letter-spacing: .22em;
+  font-weight: 700;
+  font-size: clamp(44px, 8vw, 92px);
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow:
+    0 12px 44px rgba(0,0,0,.55),
+    0 2px 14px rgba(0,0,0,.35);
+}
+
+.logo span{
+  display:inline-block;
+  opacity:0;
+  
+  filter: blur(10px);
+  animation: flyIn .9s cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay: calc(var(--i) * 90ms + 140ms);
+}
+
+/* tagline */
+.tagline{
+  margin: 18px 0 0 0;
+  font-size: 14px;
+  letter-spacing: .08em;
+  color: var(--text-soft);
+  text-shadow: 0 10px 24px rgba(0,0,0,.45);
+  opacity:0;
+  
+  animation: fadeUp .9s ease forwards;
+  animation-delay: 650ms;
+}
+
+/* Motion */
+@keyframes smokeDrift{
+  0%   {  }
+  50%  {  }
+  100% {  }
+}
+
+@keyframes flyIn{
+  0%{
+    opacity:0;
+    
+    filter: blur(14px);
+  }
+  60%{
+    opacity:1;
+    
+    filter: blur(2px);
+  }
+  100%{
+    opacity:1;
+    
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeUp{
+  to{
+    opacity:1;
+    
+  }
+}
+
+/* Respect accessibility */
+@media (prefers-reduced-motion: reduce){
+  .hero::after{ animation:none; }
+  .logo span{ animation:none; opacity:1; transform:none; filter:none; }
+  .tagline{ animation:none; opacity:1; transform:none; }
+}
+
+
+
+/* =========================
+   Universal cinematic depth (Safari + Chrome)
+   ========================= */
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* soft cinematic darkening */
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,0.08),
+      rgba(0,0,0,0.28)
+    );
+
+  mix-blend-mode: multiply;
+}
+
+/* preserve highlights + smoke detail */
+.hero {
+  filter: contrast(1.06) saturate(1.03);
+}
+
+/* ---------- BASE fly-in (Superman-style) ---------- */
+.fly {
+  display: inline-block;
+  opacity: 0;
+  
+  filter: blur(8px);
+  will-change: transform, opacity, filter;
+  animation: baseFlyIn 950ms cubic-bezier(.15,.85,.2,1) forwards;
+  animation-delay: calc(180ms + (var(--i) * 95ms));
+}
+
+@keyframes baseFlyIn {
+  0% {
+    opacity: 0;
+    
+    filter: blur(10px);
+  }
+  65% {
+    opacity: 1;
+    
+    filter: blur(1.5px);
+  }
+  100% {
+    opacity: 1;
+    
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fly { animation: none; opacity: 1; transform: none; filter: none; }
+}
+
+
+.brand {
+  position:relative;
+  left:0;
+  right:0;
+  margin:0 auto;
+
+  font-size: 5rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+}
+
+.fly {
+  display: inline-block;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  opacity: 0;
+  
+  animation: flyIn 1.2s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay: calc(var(--i) * 0.12s);
+}
+
+@keyframes flyIn {
+  0% {
+    opacity: 0;
+    
+  }
+  100% {
+    opacity: 1;
+    
+  }
+}
+
+
+/* --- Fly-in BASE letters --- */
+.brand{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:0.18em;
+  font-size:5rem;
+  font-weight:600;
+  letter-spacing:0.4em;
+}
+
+.fly{
+  display:inline-block;
+  font:inherit;
+  opacity:0;
+  
+  filter:none;
+  animation: flyIn2D 900ms cubic-bezier(.16,.84,.44,1) forwards;
+  animation-delay: calc(var(--i) * 0.11s);
+  will-change: transform, opacity;
+}
+
+@keyframes flyIn2D{
+  0%{ opacity:0;  }
+  60%{ opacity:1;  }
+  100%{ opacity:1;  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .fly{ animation:none; opacity:1; transform:none; }
+}
+
+
+/* --- Browser color lock overlay --- */
+:root{ --bg-dim: 0.32; } /* raise to 0.38 darker, lower to 0.26 lighter */
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,1);
+  opacity: var(--bg-dim);
+  pointer-events:none;
+  z-index:0;
+}
+
+.hero > *{
+  position: relative;
+  z-index: 1;
+}
