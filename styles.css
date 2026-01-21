@@ -25,10 +25,6 @@ body{
 
 /* HERO */
 .hero{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
   position:relative;
   min-height:100vh;
   display:grid;
@@ -38,7 +34,7 @@ body{
   background: var(--ink);
 }
 
-/* LAYER 1: lace image */
+/* LAYER 1: lace image (crisp, no dulling) */
 .hero::before{
   content:"";
   position:absolute;
@@ -51,7 +47,7 @@ body{
   z-index:0;
 }
 
-/* LAYER 2: smoke drift */
+/* LAYER 2: smoke drift (more noticeable + movement) */
 .hero::after{
   content:"";
   position:absolute;
@@ -59,18 +55,133 @@ body{
   background-image:url("./assets/baselace-srgb.png");
   background-size:cover;
   background-position:center;
+  /* This combo makes the smoke feel alive without dulling everything */
   mix-blend-mode: screen;
   opacity: .55;
   filter: blur(1.2px) contrast(1.15) brightness(1.12);
+  transform: translate3d(-2%, 1%, 0) scale(1.08);
   animation: smokeDrift 6s ease-in-out infinite alternate;
   z-index:1;
   pointer-events:none;
 }
 
-/* Motion */
-@keyframes smokeDrift{}
+/* LAYER 3: subtle vignette + editorial depth (very light so it won’t dull) */
+.hero__vignette{
+  display:none;
+}
 
-/* ---------- BASE ---------- */
+.hero .hero__content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding: 48px 20px;
+}
+
+/* LOGO fly-in (Superman-ish) */
+.logo{
+  margin:0;
+  letter-spacing: .22em;
+  font-weight: 700;
+  font-size: clamp(44px, 8vw, 92px);
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow:
+    0 12px 44px rgba(0,0,0,.55),
+    0 2px 14px rgba(0,0,0,.35);
+}
+
+.logo span{
+  display:inline-block;
+  opacity:0;
+  transform: translateY(24px) scale(0.92);
+  filter: blur(10px);
+  animation: flyIn .9s cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay: calc(var(--i) * 90ms + 140ms);
+}
+
+/* tagline */
+.tagline{
+  margin: 18px 0 0 0;
+  font-size: 14px;
+  letter-spacing: .08em;
+  color: var(--text-soft);
+  text-shadow: 0 10px 24px rgba(0,0,0,.45);
+  opacity:0;
+  transform: translateY(10px);
+  animation: fadeUp .9s ease forwards;
+  animation-delay: 650ms;
+}
+
+/* Motion */
+@keyframes smokeDrift{
+  0%   { transform: translate3d(-2%, 1%, 0) scale(1.10); }
+  50%  { transform: translate3d(-2%, 1%, 0) scale(1.14); }
+  100% { transform: translate3d(-2%, 1%, 0) scale(1.18); }
+}
+
+@keyframes flyIn{
+  0%{
+    opacity:0;
+    transform: translateY(30px) scale(0.88);
+    filter: blur(14px);
+  }
+  60%{
+    opacity:1;
+    transform: translateY(-2px) scale(1.02);
+    filter: blur(2px);
+  }
+  100%{
+    opacity:1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeUp{
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect accessibility */
+@media (prefers-reduced-motion: reduce){
+  .hero::after{ animation:none; }
+  .logo span{ animation:none; opacity:1; transform:none; filter:none; }
+  .tagline{ animation:none; opacity:1; transform:none; }
+}
+
+
+
+/* =========================
+   Universal cinematic depth (Safari + Chrome)
+   ========================= */
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* soft cinematic darkening */
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,0.08),
+      rgba(0,0,0,0.28)
+    );
+
+  mix-blend-mode: multiply;
+}
+
+/* preserve highlights + smoke detail */
+.hero {
+  filter: contrast(1.06) saturate(1.03);
+}
+/* ==========================================================
+   BASE wordmark (FONT ONLY) — luxury antique gold + shimmer
+   (Does NOT touch hero background layers)
+   ========================================================== */
 
 .brand{
   display:inline-flex;
@@ -83,10 +194,9 @@ body{
 }
 
 .brand .fly{
+  /* gold gradient shimmer clipped to text */
   color: transparent;
   -webkit-text-fill-color: transparent;
-
-  /* SMOKE-MATCHED ANTIQUE GOLD */
   background-image: linear-gradient(
     120deg,
     #2b1f12 0%,
@@ -97,49 +207,34 @@ body{
     #7a5a2d 78%,
     #2b1f12 100%
   );
-
   background-size: 260% 100%;
   background-position: 0% 50%;
   -webkit-background-clip: text;
   background-clip: text;
 
-  /* matte, embedded depth (NOT shiny) */
+  /* matte depth (blends with smoke) */
   filter:
     drop-shadow(0 8px 22px rgba(0,0,0,.65))
     drop-shadow(0 0 14px rgba(140,105,55,.14));
 
-  opacity:0;
-  animation:
-    flyIn2D 900ms cubic-bezier(.16,.84,.44,1) forwards,
-    baseGoldShimmer 4200ms linear infinite;
-  animation-delay:
-    calc(var(--i) * 0.11s),
-    1000ms;
+  /* keep your existing fly-in; add shimmer without overriding it */
+  animation-name: flyIn, baseGoldShimmer;
+  animation-duration: .9s, 4.2s;
+  animation-timing-function: cubic-bezier(.2,.9,.2,1), linear;
+  animation-fill-mode: forwards, infinite;
+  animation-delay: calc(var(--i) * 90ms + 140ms), 1100ms;
 }
 
 @keyframes baseGoldShimmer{
-  from { background-position: 0% 50%; }
-  to   { background-position: 100% 50%; }
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .brand .fly{
-    animation: flyIn2D 800ms ease forwards;
+    animation-name: flyIn;
+    animation-duration: .9s;
+    animation-delay: calc(var(--i) * 90ms + 140ms);
     background-position: 50% 50%;
   }
-}
-
-/* Fly-in */
-@keyframes flyIn2D{
-  from{ opacity:0; }
-  to{ opacity:1; }
-}
-
-/* Center */
-.center-wrap{
-  min-height: 100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
 }
