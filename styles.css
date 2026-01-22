@@ -30,7 +30,6 @@ body{
   overflow:hidden;
   isolation:isolate;
 
-  /* keep it dark (no milky gray) */
   background:
     radial-gradient(
       ellipse at center,
@@ -47,8 +46,7 @@ body{
   position:absolute;
   inset:-6%;
   background:url("./assets/baselace-srgb.png") center/cover no-repeat;
-  filter: contrast(1.1) saturate(1.06) brightness(0.86);
-  transform: scale(1.02);
+  filter: contrast(1.1) saturate(1.06) brightness(0.9);
   z-index:0;
 }
 
@@ -60,17 +58,15 @@ body{
   background:
     radial-gradient(
       ellipse at center,
-      rgba(0,0,0,0.20) 0%,
-      rgba(0,0,0,0.58) 65%,
-      rgba(0,0,0,0.88) 100%
+      rgba(0,0,0,0.2) 0%,
+      rgba(0,0,0,0.55) 65%,
+      rgba(0,0,0,0.85) 100%
     ),
     url("./assets/baselace-srgb.png");
-  background-size:cover,cover;
-  background-position:center,center;
-  opacity:.42;
-  filter: blur(1.8px) contrast(1.05) brightness(0.82);
+  background-size:cover;
+  opacity:.45;
+  filter: blur(1.8px);
   mix-blend-mode:multiply;
-  transform: translate3d(-1.5%, 1%, 0) scale(1.06);
   z-index:1;
 }
 
@@ -80,33 +76,32 @@ body{
   position:relative;
   z-index:3;
   min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:grid;
+  place-items:center;
   text-align:center;
-  padding: 40px 16px;
-}
-
-.brand-wrap{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
 }
 
 /* ================= WORDMARK ================= */
 
+/*
+  ✅ BEHAVIOR:
+  - letters fly in one by one (delayed by --i)
+  - stays WIDE for a moment
+  - then squeezes in (centered)
+*/
 .brand{
   display:inline-flex;
   align-items:flex-end;
   justify-content:center;
   transform-origin:center;
+  will-change: gap;
 
-  /* start wide */
-  gap: 46px;
+  /* Start wide */
+  gap: 52px;
 
-  /* squeeze AFTER all letters arrived */
-  animation: squeezeIn 620ms cubic-bezier(.2,.9,.2,1) forwards;
-  animation-delay: 2.25s;
+  /* Squeeze AFTER fly-in is done */
+  animation: squeezeIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay: 2.15s; /* ✅ fly-in finishes first */
 }
 
 /* letter wrapper */
@@ -114,17 +109,17 @@ body{
   opacity:0;
   display:inline-flex;
 
+  /* Start coming from below slightly */
   transform:
     translateX(var(--sx, 0px))
-    translateY(30px)
-    scale(calc(0.88 * var(--sc, 1)));
+    translateY(34px)
+    scale(0.88);
 
   filter: blur(14px);
 
+  /* ✅ letter-by-letter timing (slow enough to see) */
   animation: flyIn .95s cubic-bezier(.2,.9,.2,1) forwards;
-  animation-delay: calc(var(--i) * 180ms + 120ms);
-
-  will-change: transform, opacity, filter;
+  animation-delay: calc(220ms + (var(--i) * 220ms));
 }
 
 /* PNG letters */
@@ -132,6 +127,8 @@ body{
   height:110px;
   width:auto;
   display:block;
+
+  /* luxe + darker antique gold look */
   filter:
     brightness(0.82)
     saturate(0.88)
@@ -146,8 +143,8 @@ body{
     opacity:0;
     transform:
       translateX(var(--sx, 0px))
-      translateY(30px)
-      scale(calc(0.88 * var(--sc, 1)));
+      translateY(34px)
+      scale(0.88);
     filter: blur(14px);
   }
   60%{
@@ -155,97 +152,57 @@ body{
     transform:
       translateX(var(--sx, 0px))
       translateY(-2px)
-      scale(calc(1.02 * var(--sc, 1)));
+      scale(1.02);
     filter: blur(2px);
   }
   100%{
     opacity:1;
     transform:
       translateX(var(--sx, 0px))
-      translateY(0px)
-      scale(var(--sc, 1));
+      translateY(0)
+      scale(1);
     filter: blur(0);
   }
 }
 
 /* squeeze AFTER fly-in */
 @keyframes squeezeIn{
-  0%   { gap: 46px; }
-  70%  { gap: -34px; } /* stick together moment */
-  100% { gap: -24px; } /* final tight */
+  0%   { gap: 52px; }
+  70%  { gap: -38px; }
+  100% { gap: -26px; }
 }
 
 /* ================= CTA ================= */
 
 .cta{
-  margin-top: 16px;
-  font-size: 13px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  text-decoration: none;
-
+  margin-top:12px;
+  font-size:12px;
+  letter-spacing:.38em;
+  text-transform:uppercase;
   color: rgba(200,160,74,.88);
-  filter:
-    brightness(0.82)
-    saturate(0.9)
-    contrast(1.05)
-    drop-shadow(0 6px 14px rgba(0,0,0,.55));
-
-  opacity: 0;
-  transform: translateY(8px);
-
-  /* shows AFTER squeeze */
-  animation: ctaIn .8s ease forwards;
-  animation-delay: 2.95s;
+  text-decoration:none;
+  opacity:.92;
 }
 
-.cta::after{
-  content:"";
-  display:block;
-  width:18px;
-  height:1px;
-  margin:8px auto 0;
-  background: rgba(201,162,79,.6);
-  transform: scaleX(0);
-  transition: transform .35s ease;
-}
+.cta:hover{ opacity:1; }
 
-.cta:hover::after{
-  transform: scaleX(1);
-}
-
-@keyframes ctaIn{
-  to{
-    opacity:1;
-    transform: translateY(0);
-  }
-}
-
-/* mobile */
-@media (max-width: 640px){
+/* Mobile */
+@media (max-width:640px){
+  .brand{ gap: 26px; animation-delay: 2.0s; }
   .brand .fly img{ height:78px; }
-
-  .brand{
-    gap: 30px;
-    animation-delay: 2.15s;
-  }
-
   @keyframes squeezeIn{
-    0%   { gap: 30px; }
-    70%  { gap: -22px; }
-    100% { gap: -14px; }
+    0%   { gap: 26px; }
+    70%  { gap: -18px; }
+    100% { gap: -12px; }
   }
-
-  .cta{ letter-spacing: .24em; }
 }
 
-/* reduced motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .brand, .brand .fly, .cta{
-    animation:none !important;
-    opacity:1 !important;
-    transform:none !important;
-    filter:none !important;
+  .brand, .brand .fly{
+    animation:none;
+    opacity:1;
+    transform:none;
+    filter:none;
   }
 }
-

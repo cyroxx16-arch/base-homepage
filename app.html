@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BASE — Inside</title>
+  <style>
+    :root{
+      --ink:#0f0607;
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.03);
+      --stroke: rgba(255,255,255,.10);
+      --text: rgba(245,242,238,.92);
+      --soft: rgba(245,242,238,.72);
+      --gold: rgba(140,105,55,.95);
+      --goldSoft: rgba(140,105,55,.35);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; background:#000; }
+    body{
+      margin:0;
+      background: radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.05), transparent 60%),
+                  var(--ink);
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* top bar */
+    .top{
+      position:sticky;
+      top:0;
+      z-index:5;
+      padding:18px 18px 14px;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.18));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .top-inner{
+      max-width:980px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing:.22em;
+      font-weight:700;
+      font-size:13px;
+      color:var(--text);
+    }
+    .brand-dot{
+      width:6px;height:6px;border-radius:999px;
+      background: var(--gold);
+      box-shadow: 0 0 18px var(--goldSoft);
+    }
+    .nav a{
+      color:var(--soft);
+      text-decoration:none;
+      font-size:12px;
+      letter-spacing:.12em;
+      padding:10px 10px;
+      border-radius:12px;
+      transition: opacity .15s ease, background .15s ease;
+    }
+    .nav a:hover{
+      opacity:1;
+      background: rgba(255,255,255,.05);
+    }
+
+    /* content */
+    .content{
+      max-width:980px;
+      width:100%;
+      margin:0 auto;
+      padding:28px 18px 28px;
+      flex:1;
+    }
+
+    .hero{
+      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:22px;
+      padding:22px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      backdrop-filter: blur(12px);
+    }
+    .kicker{
+      color:var(--soft);
+      letter-spacing:.14em;
+      font-size:12px;
+      margin:0 0 10px 0;
+    }
+    .title{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.02em;
+    }
+    .sub{
+      margin:10px 0 0 0;
+      color:var(--soft);
+      line-height:1.5;
+      max-width:60ch;
+    }
+
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .card{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      padding:16px;
+      min-height:120px;
+    }
+    .card h3{
+      margin:0 0 8px 0;
+      font-size:13px;
+      letter-spacing:.10em;
+      color:var(--text);
+    }
+    .card p{
+      margin:0;
+      color:var(--soft);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    /* footer */
+    .footer{
+      padding:18px;
+      border-top:1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .footer-inner{
+      max-width:980px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .fine{
+      color:rgba(245,242,238,.55);
+      font-size:12px;
+      letter-spacing:.06em;
+    }
+    .links{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .links a{
+      color:rgba(245,242,238,.78);
+      text-decoration:none;
+      font-size:12px;
+      letter-spacing:.12em;
+      border-bottom:1px solid rgba(245,242,238,.18);
+      padding-bottom:2px;
+    }
+    .links a:hover{ color:rgba(245,242,238,.92); border-bottom-color: rgba(245,242,238,.35); }
+
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .title{ font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="top-inner">
+        <div class="brand"><span class="brand-dot"></span> BASE</div>
+        <nav class="nav">
+          <a href="./index.html">HOME</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="hero">
+        <p class="kicker">WELCOME INSIDE</p>
+        <h1 class="title">Your BASE dashboard shell</h1>
+        <p class="sub">
+          This is where we’ll build the inside experience (sections, pages, and navigation).
+          Next we can add real screens + routes.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>SECTION 01</h3>
+            <p>Placeholder card. We’ll replace these with your real “inside” layout.</p>
+          </div>
+          <div class="card">
+            <h3>SECTION 02</h3>
+            <p>Another placeholder. Tell me what the first real screen should be.</p>
+          </div>
+          <div class="card">
+            <h3>SECTION 03</h3>
+            <p>We can add animations + luxury glass depth after structure is set.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="fine">© <span id="y"></span> BASE</div>
+        <div class="links">
+          <a href="./privacy.html">PRIVACY</a>
+          <a href="./terms.html">TERMS</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
