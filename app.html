@@ -1,221 +1,160 @@
+<!-- app.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BASE — Inside</title>
-  <style>
-    :root{
-      --ink:#0f0607;
-      --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.03);
-      --stroke: rgba(255,255,255,.10);
-      --text: rgba(245,242,238,.92);
-      --soft: rgba(245,242,238,.72);
-      --gold: rgba(140,105,55,.95);
-      --goldSoft: rgba(140,105,55,.35);
-    }
+  <link rel="stylesheet" href="./app.css" />
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; background:#000; }
-    body{
-      margin:0;
-      background: radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.05), transparent 60%),
-                  var(--ink);
-      color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-    }
-
-    .wrap{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
-
-    /* top bar */
-    .top{
-      position:sticky;
-      top:0;
-      z-index:5;
-      padding:18px 18px 14px;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.18));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .top-inner{
-      max-width:980px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      letter-spacing:.22em;
-      font-weight:700;
-      font-size:13px;
-      color:var(--text);
-    }
-    .brand-dot{
-      width:6px;height:6px;border-radius:999px;
-      background: var(--gold);
-      box-shadow: 0 0 18px var(--goldSoft);
-    }
-    .nav a{
-      color:var(--soft);
-      text-decoration:none;
-      font-size:12px;
-      letter-spacing:.12em;
-      padding:10px 10px;
-      border-radius:12px;
-      transition: opacity .15s ease, background .15s ease;
-    }
-    .nav a:hover{
-      opacity:1;
-      background: rgba(255,255,255,.05);
-    }
-
-    /* content */
-    .content{
-      max-width:980px;
-      width:100%;
-      margin:0 auto;
-      padding:28px 18px 28px;
-      flex:1;
-    }
-
-    .hero{
-      border:1px solid rgba(255,255,255,.08);
-      background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border-radius:22px;
-      padding:22px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.45);
-      backdrop-filter: blur(12px);
-    }
-    .kicker{
-      color:var(--soft);
-      letter-spacing:.14em;
-      font-size:12px;
-      margin:0 0 10px 0;
-    }
-    .title{
-      margin:0;
-      font-size:22px;
-      letter-spacing:.02em;
-    }
-    .sub{
-      margin:10px 0 0 0;
-      color:var(--soft);
-      line-height:1.5;
-      max-width:60ch;
-    }
-
-    .grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-    .card{
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-      padding:16px;
-      min-height:120px;
-    }
-    .card h3{
-      margin:0 0 8px 0;
-      font-size:13px;
-      letter-spacing:.10em;
-      color:var(--text);
-    }
-    .card p{
-      margin:0;
-      color:var(--soft);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    /* footer */
-    .footer{
-      padding:18px;
-      border-top:1px solid rgba(255,255,255,.06);
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-    }
-    .footer-inner{
-      max-width:980px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .fine{
-      color:rgba(245,242,238,.55);
-      font-size:12px;
-      letter-spacing:.06em;
-    }
-    .links{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-    .links a{
-      color:rgba(245,242,238,.78);
-      text-decoration:none;
-      font-size:12px;
-      letter-spacing:.12em;
-      border-bottom:1px solid rgba(245,242,238,.18);
-      padding-bottom:2px;
-    }
-    .links a:hover{ color:rgba(245,242,238,.92); border-bottom-color: rgba(245,242,238,.35); }
-
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
-      .title{ font-size:20px; }
-    }
-  </style>
+  <!-- ✅ Cursor preload (matches app.css assets) -->
+  <link rel="preload" as="image" href="./assets/cursors/cursor-base-gold-32.png" />
+  <link rel="preload" as="image" href="./assets/cursors/cursor-base-gold-64.png" />
 </head>
+
 <body>
   <div class="wrap">
     <header class="top">
       <div class="top-inner">
-        <div class="brand"><span class="brand-dot"></span> BASE</div>
-        <nav class="nav">
-          <a href="./index.html">HOME</a>
+        <!-- ✅ Brand always returns to the gold antique homepage -->
+        <a class="brand" href="./app.html" aria-label="BASE Home">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span class="brand-text">BASE</span>
+        </a>
+
+        <!-- ✅ Nav: HOME stays inside / SPLASH returns to smoke page / FAQ goes to faq -->
+        <nav class="nav" aria-label="Primary">
+          <a href="./app.html">HOME</a>
+          <a href="./index.html">SPLASH</a>
+          <a href="./pages/support/faq.html">FAQ</a>
         </nav>
       </div>
     </header>
 
     <main class="content">
-      <section class="hero">
-        <p class="kicker">WELCOME INSIDE</p>
-        <h1 class="title">Your BASE dashboard shell</h1>
-        <p class="sub">
-          This is where we’ll build the inside experience (sections, pages, and navigation).
-          Next we can add real screens + routes.
-        </p>
+      <section class="mast">
+        <div class="mast-inner">
+          <div class="orn-rule" aria-hidden="true"></div>
 
-        <div class="grid">
-          <div class="card">
-            <h3>SECTION 01</h3>
-            <p>Placeholder card. We’ll replace these with your real “inside” layout.</p>
+          <div class="wordmark-wrap" aria-label="BASE">
+            <img class="wordmark" src="./assets/base-wordmark.png" alt="BASE" />
           </div>
-          <div class="card">
-            <h3>SECTION 02</h3>
-            <p>Another placeholder. Tell me what the first real screen should be.</p>
+
+          <div class="subline">
+            <span class="gem" aria-hidden="true"></span>
+            <span class="subline-text">WELCOME INSIDE</span>
+            <span class="gem" aria-hidden="true"></span>
           </div>
-          <div class="card">
-            <h3>SECTION 03</h3>
-            <p>We can add animations + luxury glass depth after structure is set.</p>
-          </div>
+
+          <div class="orn-rule" aria-hidden="true"></div>
         </div>
       </section>
+
+      <div class="grid">
+        <!-- SECTION 01 — Support Links -->
+        <div class="card card--gold">
+          <div class="card-frame" aria-hidden="true"></div>
+
+          <nav class="section01" aria-label="Support links">
+            <ul class="section01-list">
+              <!-- ✅ CONTACT US -->
+              <li>
+                <a
+                  class="section01-a"
+                  href="mailto:support@baseofficial.net?subject=Base%20Support&body=Hi%20Base%20Support%2C%0A%0A%5BWrite%20your%20message%20here%5D%0A%0A---%0AHelpful%20details%20(optional)%3A%0A%E2%80%A2%20Device%3A%20%0A%E2%80%A2%20OS%20version%3A%20%0A%E2%80%A2%20App%20version%3A%20%0A%E2%80%A2%20Account%20email%20(if%20relevant)%3A%0A%0AThanks%2C%0A"
+                >
+                  CONTACT US
+                </a>
+              </li>
+
+              <!-- ✅ FAQ -->
+              <li>
+                <a class="section01-a" href="./pages/support/faq.html">FAQ</a>
+              </li>
+
+              <!-- ✅ REPORT A PROBLEM -->
+              <li>
+                <a
+                  class="section01-a"
+                  href="mailto:support@baseofficial.net?subject=Base%20Bug%20Report&body=Hi%20Base%20Support%2C%0A%0AProblem%3A%0A%5BShort%20summary%5D%0A%0ASteps%20to%20reproduce%3A%0A1.%20%0A2.%20%0A3.%20%0A%0AExpected%3A%0A%0AActual%3A%0A%0A---%0AHelpful%20details%20(optional)%3A%0A%E2%80%A2%20Device%3A%20%0A%E2%80%A2%20OS%20version%3A%20%0A%E2%80%A2%20App%20version%3A%20%0A%E2%80%A2%20Screenshots%2FScreen%20recording%3A%20%0A%0AThanks%2C%0A"
+                >
+                  REPORT A PROBLEM
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- 🌑 AURA HERO -->
+        <div class="card card--diamond card--aura" id="auraCard">
+          <div class="card-frame" aria-hidden="true"></div>
+
+          <div class="aura-hero">
+            <div class="aura-mark-wrap" aria-hidden="true">
+              <img
+                class="aura-mark"
+                src="./assets/aura/aura-mark.png"
+                alt="Aura"
+                onerror="this.style.display='none'"
+              />
+            </div>
+
+            <div class="aura-actions">
+              <button class="btn btn--primary" id="auraGetNow" type="button">
+                GET NOW
+              </button>
+              <button class="btn btn--ghost" id="auraLearnMore" type="button">
+                LEARN MORE
+              </button>
+            </div>
+
+            <div class="aura-footnote">
+              Cancel anytime • Restore supported
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 03 — Base Platform -->
+        <div class="card card--gold">
+          <div class="card-frame" aria-hidden="true"></div>
+
+          <section class="section03" aria-label="Base platform overview">
+            <div class="section03-eyebrow">BASE</div>
+
+            <p class="section03-copy">
+              Base brings stories, reels, and messaging into a calm, intentional space.
+              <span class="section03-keep">With Aura for those who want more.</span>
+            </p>
+
+            <div class="section03-pills">
+              <span class="section03-pill">STORIES</span>
+              <span class="section03-pill">REELS</span>
+              <span class="section03-pill">MESSAGES</span>
+            </div>
+
+            <div class="section03-foot">
+              Privacy first • Built for scale • Aura ready
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- DOWNLOAD -->
+      <div class="download-wrap" aria-label="Download Base">
+        <a
+          class="download-btn"
+          href="https://baseofficial.net"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="downloadBaseBtn"
+        >
+          <span class="download-label">DOWNLOAD BASE</span>
+        </a>
+
+        <div class="download-sub">
+          iOS & Android • Coming soon
+        </div>
+      </div>
     </main>
 
     <footer class="footer">
@@ -231,6 +170,53 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+
+    // ✅ Modal wiring (null-safe)
+    const modal = document.getElementById("auraModal");
+    const learnMore = document.getElementById("auraLearnMore");
+    const closeBtn = document.getElementById("auraClose");
+    const getNow = document.getElementById("auraGetNow");
+    const modalGet = document.getElementById("auraModalGet");
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    if (learnMore) learnMore.addEventListener("click", openModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target && e.target.dataset && e.target.dataset.close) closeModal();
+      });
+    }
+
+    // ✅ AURA buttons (placeholder)
+    if (getNow) {
+      getNow.addEventListener("click", () =>
+        alert("GET NOW → wire to paywall next")
+      );
+    }
+
+    if (modalGet) {
+      modalGet.addEventListener("click", () =>
+        alert("GET AURA → wire to paywall next")
+      );
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal && modal.classList.contains("is-open")) {
+        closeModal();
+      }
+    });
   </script>
 </body>
 </html>

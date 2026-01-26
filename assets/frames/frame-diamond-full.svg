@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none">
+  <defs>
+    <linearGradient id="s" x1="70" y1="50" x2="1130" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.35" stop-color="#E8E8F2"/>
+      <stop offset="0.7" stop-color="#BFC3D4"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+
+    <filter id="ice" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.8 0" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- outer thin frame -->
+  <rect x="55" y="55" width="1090" height="590" rx="36" stroke="url(#s)" stroke-width="4" opacity="0.95" filter="url(#ice)"/>
+  <rect x="78" y="78" width="1044" height="544" rx="30" stroke="url(#s)" stroke-width="2" opacity="0.55"/>
+
+  <!-- corner “diamond clusters” (stylized) -->
+  <g opacity="0.98" filter="url(#ice)">
+    <!-- TL -->
+    <g fill="url(#s)">
+      <circle cx="150" cy="120" r="7"/>
+      <circle cx="175" cy="110" r="5"/>
+      <circle cx="190" cy="135" r="6"/>
+      <circle cx="165" cy="145" r="4.5"/>
+      <circle cx="210" cy="115" r="4"/>
+      <circle cx="225" cy="140" r="5"/>
+    </g>
+    <!-- TR -->
+    <g fill="url(#s)">
+      <circle cx="1050" cy="120" r="7"/>
+      <circle cx="1025" cy="110" r="5"/>
+      <circle cx="1010" cy="135" r="6"/>
+      <circle cx="1035" cy="145" r="4.5"/>
+      <circle cx="990" cy="115" r="4"/>
+      <circle cx="975" cy="140" r="5"/>
+    </g>
+    <!-- BL -->
+    <g fill="url(#s)">
+      <circle cx="150" cy="580" r="7"/>
+      <circle cx="175" cy="590" r="5"/>
+      <circle cx="190" cy="565" r="6"/>
+      <circle cx="165" cy="555" r="4.5"/>
+      <circle cx="210" cy="585" r="4"/>
+      <circle cx="225" cy="560" r="5"/>
+    </g>
+    <!-- BR -->
+    <g fill="url(#s)">
+      <circle cx="1050" cy="580" r="7"/>
+      <circle cx="1025" cy="590" r="5"/>
+      <circle cx="1010" cy="565" r="6"/>
+      <circle cx="1035" cy="555" r="4.5"/>
+      <circle cx="990" cy="585" r="4"/>
+      <circle cx="975" cy="560" r="5"/>
+    </g>
+  </g>
+
+  <!-- top/bottom center ornaments (silver) -->
+  <g stroke="url(#s)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" filter="url(#ice)">
+    <path d="M520 78 C560 110 640 110 680 78" />
+    <path d="M570 95 C590 130 610 130 630 95" />
+    <path d="M600 88 C610 96 620 96 630 88" />
+
+    <path d="M520 622 C560 590 640 590 680 622" />
+    <path d="M570 605 C590 570 610 570 630 605" />
+    <path d="M600 612 C610 604 620 604 630 612" />
+  </g>
+</svg>

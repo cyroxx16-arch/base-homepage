@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none">
+  <defs>
+    <linearGradient id="g" x1="80" y1="40" x2="1120" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF3B0"/>
+      <stop offset="0.35" stop-color="#D7B35A"/>
+      <stop offset="0.7" stop-color="#A87822"/>
+      <stop offset="1" stop-color="#FFE9A6"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.75 0" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- outer thin frame -->
+  <rect x="55" y="55" width="1090" height="590" rx="36" stroke="url(#g)" stroke-width="4" opacity="0.95" filter="url(#glow)"/>
+  <rect x="78" y="78" width="1044" height="544" rx="30" stroke="url(#g)" stroke-width="2" opacity="0.55"/>
+
+  <!-- corner flourishes -->
+  <g stroke="url(#g)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" filter="url(#glow)">
+    <!-- TL -->
+    <path d="M120 170 C120 120 150 95 205 95" />
+    <path d="M120 170 C155 150 175 130 205 95" />
+    <path d="M120 170 C150 210 175 230 220 240" />
+    <path d="M205 95 C250 110 285 138 300 170" />
+    <path d="M205 95 C220 130 220 155 205 185" />
+    <!-- TR -->
+    <path d="M1080 170 C1080 120 1050 95 995 95" />
+    <path d="M1080 170 C1045 150 1025 130 995 95" />
+    <path d="M1080 170 C1050 210 1025 230 980 240" />
+    <path d="M995 95 C950 110 915 138 900 170" />
+    <path d="M995 95 C980 130 980 155 995 185" />
+    <!-- BL -->
+    <path d="M120 530 C120 580 150 605 205 605" />
+    <path d="M120 530 C155 550 175 570 205 605" />
+    <path d="M120 530 C150 490 175 470 220 460" />
+    <path d="M205 605 C250 590 285 562 300 530" />
+    <path d="M205 605 C220 570 220 545 205 515" />
+    <!-- BR -->
+    <path d="M1080 530 C1080 580 1050 605 995 605" />
+    <path d="M1080 530 C1045 550 1025 570 995 605" />
+    <path d="M1080 530 C1050 490 1025 470 980 460" />
+    <path d="M995 605 C950 590 915 562 900 530" />
+    <path d="M995 605 C980 570 980 545 995 515" />
+  </g>
+
+  <!-- top/bottom center ornaments -->
+  <g stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" filter="url(#glow)">
+    <path d="M520 78 C560 110 640 110 680 78" />
+    <path d="M570 95 C590 130 610 130 630 95" />
+    <path d="M600 88 C610 96 620 96 630 88" />
+
+    <path d="M520 622 C560 590 640 590 680 622" />
+    <path d="M570 605 C590 570 610 570 630 605" />
+    <path d="M600 612 C610 604 620 604 630 612" />
+  </g>
+</svg>

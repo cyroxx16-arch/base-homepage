@@ -1,3 +1,15 @@
 *.backup.*
 *.before-flyin.*
 *.before-*
+# backups
+*.bak
+*.backup
+*.safe.*
+index.backup*
+styles.backup*
+trim/
+overwrite/
+
+# mac junk
+.DS_Store
+

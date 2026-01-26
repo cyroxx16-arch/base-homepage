@@ -1,36 +1,50 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BASE</title>
-  <link rel="stylesheet" href="./styles.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BASE</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
-  <section class="hero">
-    <div class="center-wrap">
-      <div class="brand-wrap">
+  <body>
+    <main class="hero">
+      <div class="hero-inner">
+        <div class="logo" aria-label="BASE">
 
-        <div class="brand" aria-label="BASE">
-          <span class="fly" style="--i:0; --sx:64px; --sc:1;">
-            <img src="./assets/B.png" alt="B" />
-          </span>
-          <span class="fly" style="--i:1; --sx:22px; --sc:1;">
-            <img src="./assets/A.png" alt="A" />
-          </span>
-          <span class="fly" style="--i:2; --sx:-22px; --sc:1;">
-            <img src="./assets/S.png" alt="S" />
-          </span>
-          <span class="fly" style="--i:3; --sx:-64px; --sc:1.07;">
-            <img src="./assets/E.png" alt="E" />
-          </span>
+          <!-- B: slightly lowered to match baseline -->
+          <div class="slot" style="--i:-1.5; --delay:0ms; --k:0px; --y:6px;">
+            <img class="glyph" src="assets/base/B.png" alt="B" />
+          </div>
+
+          <!-- A: neutral -->
+          <div class="slot" style="--i:-0.5; --delay:180ms; --k:0px;">
+            <img class="glyph" src="assets/base/A.png" alt="A" />
+          </div>
+
+          <!-- S: neutral -->
+          <div class="slot" style="--i:0.5; --delay:360ms; --k:0px;">
+            <img class="glyph" src="assets/base/S.png" alt="S" />
+          </div>
+
+          <!-- E: micro loosen + micro size boost (OPTICAL FIX) -->
+          <div
+            class="slot"
+            style="
+              --i:1.5;
+              --delay:540ms;
+              --k:-12px;
+              --s:1.065;
+            "
+          >
+            <img class="glyph" src="assets/base/E.png" alt="E" />
+          </div>
+
         </div>
 
-        <a href="./app.html" class="cta">Get Started</a>
-
+        <!-- CTA -->
+        <a class="cta" href="app.html">Get Started</a>
       </div>
-    </div>
-  </section>
-</body>
+    </main>
+  </body>
 </html>

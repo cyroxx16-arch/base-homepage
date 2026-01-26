@@ -1,208 +1,216 @@
-:root{
-  --ink: #0f0607;
-  --text: rgba(245, 242, 238, .92);
+/* =========================
+   BASE HOMEPAGE ANIMATION
+   FINAL OPTICAL FIX + CTA TIMING
+   ========================= */
 
-  --gold: #c8a04a;
-  --gold-soft: rgba(200,160,74,.55);
+@property --spacing {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 200px;
 }
 
-*{ box-sizing:border-box; }
+:root {
+  /* Timing */
+  --fly-dur: 950ms;
+  --hold-after-fly: 650ms;
+  --squeeze-dur: 900ms;
 
-html,body{
-  height:100%;
-  background:#000;
+  /* Spacing */
+  --spacing-start: 220px;
+  --spacing-end: 80px;
+
+  /* Logo size */
+  --logo-height: 88px;
+
+  /* CTA */
+  --cta-size: 17px;
+  --cta-gap: 22px;
+
+  /* CTA appears AFTER logo animation */
+  --cta-delay: calc(
+    540ms +
+    var(--fly-dur) +
+    var(--hold-after-fly) +
+    var(--squeeze-dur) +
+    160ms
+  );
 }
 
-body{
-  margin:0;
-  background: var(--ink);
-  color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #050507;
+  color: #fff;
+
+  background-image:
+    radial-gradient(1200px 600px at 50% 45%, rgba(255,255,255,0.06), transparent 60%),
+    radial-gradient(900px 500px at 55% 55%, rgba(255,255,255,0.04), transparent 65%),
+    url("assets/baselace-srgb.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
 }
 
-/* ================= HERO ================= */
-
-.hero{
-  position:relative;
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  isolation:isolate;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(60,55,52,0.10) 0%,
-      rgba(18,16,15,0.44) 42%,
-      #070606 74%,
-      #030303 100%
-    );
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  pointer-events: none;
 }
 
-/* lace */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:-6%;
-  background:url("./assets/baselace-srgb.png") center/cover no-repeat;
-  filter: contrast(1.1) saturate(1.06) brightness(0.9);
-  z-index:0;
+/* CENTER STACK */
+.hero {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  place-items: center;
 }
 
-/* smoke */
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:-18%;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0,0,0,0.2) 0%,
-      rgba(0,0,0,0.55) 65%,
-      rgba(0,0,0,0.85) 100%
-    ),
-    url("./assets/baselace-srgb.png");
-  background-size:cover;
-  opacity:.45;
-  filter: blur(1.8px);
-  mix-blend-mode:multiply;
-  z-index:1;
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* ================= CENTER ================= */
+/* LOGO */
+.logo {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  --spacing: var(--spacing-start);
 
-.center-wrap{
-  position:relative;
-  z-index:3;
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  text-align:center;
+  animation: squeeze var(--squeeze-dur)
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
 }
 
-/* ================= WORDMARK ================= */
-
-/*
-  ✅ BEHAVIOR:
-  - letters fly in one by one (delayed by --i)
-  - stays WIDE for a moment
-  - then squeezes in (centered)
-*/
-.brand{
-  display:inline-flex;
-  align-items:flex-end;
-  justify-content:center;
-  transform-origin:center;
-  will-change: gap;
-
-  /* Start wide */
-  gap: 52px;
-
-  /* Squeeze AFTER fly-in is done */
-  animation: squeezeIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
-  animation-delay: 2.15s; /* ✅ fly-in finishes first */
-}
-
-/* letter wrapper */
-.brand .fly{
-  opacity:0;
-  display:inline-flex;
-
-  /* Start coming from below slightly */
+/* SLOT (optical offsets) */
+.slot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   transform:
-    translateX(var(--sx, 0px))
-    translateY(34px)
-    scale(0.88);
+    translate(-50%, -50%)
+    translateX(calc((var(--i) * var(--spacing)) + var(--k, 0px)))
+    translateY(var(--y, 0px));
+  will-change: transform;
+}
 
+/* LETTER */
+.glyph {
+  height: var(--logo-height);
+  width: auto;
+
+  opacity: 0;
+  transform:
+    translateY(60px)
+    scale(var(--s, 1));
   filter: blur(14px);
 
-  /* ✅ letter-by-letter timing (slow enough to see) */
-  animation: flyIn .95s cubic-bezier(.2,.9,.2,1) forwards;
-  animation-delay: calc(220ms + (var(--i) * 220ms));
+  animation: fly-in var(--fly-dur)
+    cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+  animation-delay: var(--delay);
+
+  will-change: transform, opacity, filter;
 }
 
-/* PNG letters */
-.brand .fly img{
-  height:110px;
-  width:auto;
-  display:block;
-
-  /* luxe + darker antique gold look */
-  filter:
-    brightness(0.82)
-    saturate(0.88)
-    contrast(1.08)
-    drop-shadow(0 22px 60px rgba(0,0,0,.78))
-    drop-shadow(0 0 24px rgba(140,105,55,.14));
-}
-
-/* fly in */
-@keyframes flyIn{
-  0%{
-    opacity:0;
-    transform:
-      translateX(var(--sx, 0px))
-      translateY(34px)
-      scale(0.88);
-    filter: blur(14px);
+/* ANIMATIONS */
+@keyframes fly-in {
+  0% {
+    opacity: 0;
+    transform: translateY(70px) scale(var(--s, 1));
+    filter: blur(16px);
   }
-  60%{
-    opacity:1;
-    transform:
-      translateX(var(--sx, 0px))
-      translateY(-2px)
-      scale(1.02);
-    filter: blur(2px);
+  55% {
+    opacity: 1;
+    transform: translateY(-8px) scale(calc(var(--s, 1) * 1.02));
+    filter: blur(4px);
   }
-  100%{
-    opacity:1;
-    transform:
-      translateX(var(--sx, 0px))
-      translateY(0)
-      scale(1);
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(var(--s, 1));
     filter: blur(0);
   }
 }
 
-/* squeeze AFTER fly-in */
-@keyframes squeezeIn{
-  0%   { gap: 52px; }
-  70%  { gap: -38px; }
-  100% { gap: -26px; }
+@keyframes squeeze {
+  0% { --spacing: var(--spacing-start); }
+  70% { --spacing: var(--spacing-end); }
+  100% { --spacing: var(--spacing-end); }
 }
 
-/* ================= CTA ================= */
+/* CTA — APPEARS AFTER LOGO */
+.cta {
+  margin-top: var(--cta-gap);
+  font-size: var(--cta-size);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
 
-.cta{
-  margin-top:12px;
-  font-size:12px;
-  letter-spacing:.38em;
-  text-transform:uppercase;
-  color: rgba(200,160,74,.88);
-  text-decoration:none;
-  opacity:.92;
+  color: #d7b35a;
+  text-shadow:
+    0 0 18px rgba(215,179,90,0.25),
+    0 0 40px rgba(215,179,90,0.12);
+
+  /* start hidden */
+  opacity: 0;
+  transform: translateY(6px);
+
+  animation: cta-in 420ms ease forwards;
+  animation-delay: var(--cta-delay);
+
+  position: relative;
 }
 
-.cta:hover{ opacity:1; }
+/* Luxury underline on hover */
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: rgba(215,179,90,0.85);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease;
+}
 
-/* Mobile */
-@media (max-width:640px){
-  .brand{ gap: 26px; animation-delay: 2.0s; }
-  .brand .fly img{ height:78px; }
-  @keyframes squeezeIn{
-    0%   { gap: 26px; }
-    70%  { gap: -18px; }
-    100% { gap: -12px; }
+.cta:hover::after {
+  transform: scaleX(1);
+}
+
+.cta:hover {
+  text-shadow:
+    0 0 22px rgba(215,179,90,0.32),
+    0 0 60px rgba(215,179,90,0.18);
+}
+
+/* CTA fade-in */
+@keyframes cta-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 0.95; transform: translateY(0); }
+}
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce) {
+  .logo { animation: none; }
+  .glyph {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .brand, .brand .fly{
-    animation:none;
-    opacity:1;
-    transform:none;
-    filter:none;
+  .cta {
+    animation: none;
+    opacity: 0.95;
+    transform: none;
   }
 }
