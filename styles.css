@@ -1,23 +1,17 @@
 /* =========================
-   BASE HOMEPAGE ANIMATION
-   SAFARI-PROOF (PIXEL SLOTS)
-   One-by-one fly-in → spread out → squeeze together
+   BASE HOMEPAGE — SAFARI + CHROME SAFE
+   - No stacking
+   - Fly 1-by-1
+   - Then squeeze
+   - No broken-image flash
    ========================= */
 
 :root {
-  /* Timing */
   --fly-dur: 950ms;
   --hold-after-fly: 650ms;
   --squeeze-dur: 900ms;
-
-  /* Logo size */
   --logo-height: 88px;
 
-  /* CTA */
-  --cta-size: 17px;
-  --cta-gap: 22px;
-
-  /* CTA appears AFTER logo animation */
   --cta-delay: calc(
     540ms +
     var(--fly-dur) +
@@ -32,191 +26,123 @@ html, body { height: 100%; }
 
 body {
   margin: 0;
-  overflow: hidden;
   background: #050507;
+  overflow: hidden;
   color: #fff;
+  position: relative;
 
   background-image:
-    radial-gradient(1200px 600px at 50% 45%, rgba(255,255,255,0.06), transparent 60%),
-    radial-gradient(900px 500px at 55% 55%, rgba(255,255,255,0.04), transparent 65%),
+    radial-gradient(1200px 600px at 50% 45%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(900px 500px at 55% 55%, rgba(255,255,255,.04), transparent 65%),
     url("/assets/baselace-srgb.png");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
-  position: relative;
 }
 
 body::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  pointer-events: none;
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  pointer-events:none;
 }
 
-/* CENTER STACK */
 .hero {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: grid;
-  place-items: center;
+  height:100%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  z-index:1;
 }
 
 .hero-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-/* LOGO */
 .logo {
-  position: relative;
-  width: 100%;
-  height: 140px;
+  position:relative;
+  height:140px;
+  width:100%;
+  /* keeps the "spread" stable and prevents any layout jitter */
 }
 
-/* SLOT — pixel positioned (Safari-proof) */
+/* SLOT (ALWAYS spread immediately via --x0, never stacked) */
 .slot {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  /* ✅ Start spread-out position */
+  position:absolute;
+  left:50%;
+  top:50%;
   transform:
-    translate3d(-50%, -50%, 0)
-    translate3d(var(--x-start, 0px), var(--y, 0px), 0);
-
+    translate3d(-50%,-50%,0)
+    translate3d(var(--x0), var(--y,0px), 0);
   will-change: transform;
-
-  /* ✅ Squeeze AFTER fly-ins finish */
-  animation: slot-squeeze var(--squeeze-dur)
-    cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
-
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 /* LETTER */
 .glyph {
-  height: var(--logo-height);
-  width: auto;
+  height:var(--logo-height);
+  opacity:0;
+  transform:translate3d(0,60px,0) scale(var(--s,1));
+  filter:blur(14px);
 
-  opacity: 0;
-  transform: translate3d(0, 60px, 0) scale(var(--s, 1));
-  filter: blur(14px);
+  /* ✅ Prevent Chrome showing broken-image icons for a moment */
+  visibility: hidden;
+}
 
-  /* ✅ One-by-one fly-in */
-  animation: fly-in var(--fly-dur)
-    cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
+/* ✅ Only allow glyphs to be painted once they are loaded/decoded */
+body.ready .glyph {
+  visibility: visible;
+}
+
+/* 🔒 BLOCK animations until images are ready */
+.preload .slot,
+.preload .glyph,
+.preload .cta {
+  animation: none !important;
+}
+
+/* Fly in one-by-one (NO X movement here) */
+.slot .glyph {
+  animation: fly-in var(--fly-dur) cubic-bezier(.2,.9,.25,1) forwards;
   animation-delay: var(--delay);
-
-  will-change: transform, opacity, filter;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
-/* ANIMATIONS */
-@keyframes fly-in {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 70px, 0) scale(var(--s, 1));
-    filter: blur(16px);
-  }
-  55% {
-    opacity: 1;
-    transform: translate3d(0, -8px, 0) scale(calc(var(--s, 1) * 1.02));
-    filter: blur(4px);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(var(--s, 1));
-    filter: blur(0);
-  }
+/* Squeeze (X movement happens ONLY here, later) */
+.slot {
+  animation: squeeze var(--squeeze-dur) cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
 }
 
-/* ✅ Spread-out → squeezed position using pixel end values */
-@keyframes slot-squeeze {
-  0% {
-    transform:
-      translate3d(-50%, -50%, 0)
-      translate3d(var(--x-start, 0px), var(--y, 0px), 0);
-  }
-  70% {
-    transform:
-      translate3d(-50%, -50%, 0)
-      translate3d(var(--x-end, 0px), var(--y, 0px), 0);
-  }
-  100% {
-    transform:
-      translate3d(-50%, -50%, 0)
-      translate3d(var(--x-end, 0px), var(--y, 0px), 0);
-  }
-}
-
-/* CTA — APPEARS AFTER LOGO */
+/* CTA */
 .cta {
-  margin-top: var(--cta-gap);
-  font-size: var(--cta-size);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-
-  color: #d7b35a;
-  text-shadow:
-    0 0 18px rgba(215,179,90,0.25),
-    0 0 40px rgba(215,179,90,0.12);
-
-  opacity: 0;
-  transform: translate3d(0, 6px, 0);
-
-  animation: cta-in 420ms ease forwards;
+  margin-top:22px;
+  font-size:17px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:#d7b35a;
+  opacity:0;
+  transform:translateY(6px);
+  animation: cta-in .42s ease forwards;
   animation-delay: var(--cta-delay);
-
-  position: relative;
 }
 
-/* Luxury underline on hover */
-.cta::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 1px;
-  background: rgba(215,179,90,0.85);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 220ms ease;
+/* Keyframes */
+@keyframes fly-in {
+  0%   { opacity:0; transform:translateY(70px) scale(var(--s,1)); filter:blur(16px); }
+  55%  { opacity:1; transform:translateY(-8px) scale(calc(var(--s,1)*1.02)); filter:blur(4px); }
+  100% { opacity:1; transform:translateY(0) scale(var(--s,1)); filter:none; }
 }
 
-.cta:hover::after { transform: scaleX(1); }
-
-.cta:hover {
-  text-shadow:
-    0 0 22px rgba(215,179,90,0.32),
-    0 0 60px rgba(215,179,90,0.18);
+@keyframes squeeze {
+  to {
+    transform:
+      translate3d(-50%,-50%,0)
+      translate3d(var(--x1), var(--y,0px), 0);
+  }
 }
 
 @keyframes cta-in {
-  from { opacity: 0; transform: translate3d(0, 6px, 0); }
-  to   { opacity: 0.95; transform: translate3d(0, 0, 0); }
-}
-
-/* Motion safety */
-@media (prefers-reduced-motion: reduce) {
-  .slot { animation: none; }
-  .glyph {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-  .cta {
-    animation: none;
-    opacity: 0.95;
-    transform: none;
-  }
+  to { opacity:.95; transform:none; }
 }
