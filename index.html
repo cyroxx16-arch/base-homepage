@@ -4,7 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BASE</title>
-    <link rel="stylesheet" href="styles.css" />
+
+    <!-- ✅ Root-absolute CSS (domain-safe) -->
+    <link rel="stylesheet" href="/styles.css?v=20260126-2" />
+
+    <!-- ✅ Preload glyphs (Safari needs this) -->
+    <link rel="preload" as="image" href="/assets/base/B.png" />
+    <link rel="preload" as="image" href="/assets/base/A.png" />
+    <link rel="preload" as="image" href="/assets/base/S.png" />
+    <link rel="preload" as="image" href="/assets/base/E.png" />
+
+    <!-- ✅ SAFARI FIX: force compositing + animation start -->
+    <style>
+      .slot,
+      .glyph {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        will-change: transform, opacity;
+      }
+    </style>
   </head>
 
   <body>
@@ -12,39 +30,42 @@
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
 
-          <!-- B: slightly lowered to match baseline -->
+          <!-- B -->
           <div class="slot" style="--i:-1.5; --delay:0ms; --k:0px; --y:6px;">
-            <img class="glyph" src="assets/base/B.png" alt="B" />
+            <img class="glyph" src="/assets/base/B.png" alt="B" />
           </div>
 
-          <!-- A: neutral -->
+          <!-- A -->
           <div class="slot" style="--i:-0.5; --delay:180ms; --k:0px;">
-            <img class="glyph" src="assets/base/A.png" alt="A" />
+            <img class="glyph" src="/assets/base/A.png" alt="A" />
           </div>
 
-          <!-- S: neutral -->
+          <!-- S -->
           <div class="slot" style="--i:0.5; --delay:360ms; --k:0px;">
-            <img class="glyph" src="assets/base/S.png" alt="S" />
+            <img class="glyph" src="/assets/base/S.png" alt="S" />
           </div>
 
-          <!-- E: micro loosen + micro size boost (OPTICAL FIX) -->
+          <!-- E -->
           <div
             class="slot"
-            style="
-              --i:1.5;
-              --delay:540ms;
-              --k:-12px;
-              --s:1.065;
-            "
+            style="--i:1.5; --delay:540ms; --k:-12px; --s:1.065;"
           >
-            <img class="glyph" src="assets/base/E.png" alt="E" />
+            <img class="glyph" src="/assets/base/E.png" alt="E" />
           </div>
 
         </div>
 
         <!-- CTA -->
-        <a class="cta" href="app.html">Get Started</a>
+        <a class="cta" href="/app.html">Get Started</a>
       </div>
     </main>
+
+    <!-- ✅ SAFARI NUDGE: triggers animation reliably -->
+    <script>
+      // Safari sometimes needs a repaint to start animations
+      requestAnimationFrame(() => {
+        document.body.classList.add("ready");
+      });
+    </script>
   </body>
 </html>
