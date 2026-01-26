@@ -1,13 +1,8 @@
 /* =========================
    BASE HOMEPAGE ANIMATION
+   SAFARI-PROOF (NO @property)
    FINAL OPTICAL FIX + CTA TIMING
    ========================= */
-
-@property --spacing {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 200px;
-}
 
 :root {
   /* Timing */
@@ -48,7 +43,7 @@ body {
   background-image:
     radial-gradient(1200px 600px at 50% 45%, rgba(255,255,255,0.06), transparent 60%),
     radial-gradient(900px 500px at 55% 55%, rgba(255,255,255,0.04), transparent 65%),
-    url("assets/baselace-srgb.png");
+    url("/assets/baselace-srgb.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -84,11 +79,6 @@ body::after {
   position: relative;
   width: 100%;
   height: 140px;
-  --spacing: var(--spacing-start);
-
-  animation: squeeze var(--squeeze-dur)
-    cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
 }
 
 /* SLOT (optical offsets) */
@@ -96,11 +86,25 @@ body::after {
   position: absolute;
   left: 50%;
   top: 50%;
+
+  /* Default (Chrome/Firefox) — gets overridden by animation keyframes too */
   transform:
     translate(-50%, -50%)
-    translateX(calc((var(--i) * var(--spacing)) + var(--k, 0px)))
+    translateX(calc((var(--i) * var(--spacing-start)) + var(--k, 0px)))
     translateY(var(--y, 0px));
+
   will-change: transform;
+
+  /* ✅ SAFARI-PROOF squeeze: animate each slot’s translateX */
+  animation: slot-squeeze var(--squeeze-dur)
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
+
+  /* ✅ Safari stability */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* LETTER */
@@ -119,6 +123,12 @@ body::after {
   animation-delay: var(--delay);
 
   will-change: transform, opacity, filter;
+
+  /* ✅ Safari stability */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* ANIMATIONS */
@@ -140,10 +150,26 @@ body::after {
   }
 }
 
-@keyframes squeeze {
-  0% { --spacing: var(--spacing-start); }
-  70% { --spacing: var(--spacing-end); }
-  100% { --spacing: var(--spacing-end); }
+/* ✅ Each slot squeezes from spacing-start → spacing-end */
+@keyframes slot-squeeze {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      translateX(calc((var(--i) * var(--spacing-start)) + var(--k, 0px)))
+      translateY(var(--y, 0px));
+  }
+  70% {
+    transform:
+      translate(-50%, -50%)
+      translateX(calc((var(--i) * var(--spacing-end)) + var(--k, 0px)))
+      translateY(var(--y, 0px));
+  }
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateX(calc((var(--i) * var(--spacing-end)) + var(--k, 0px)))
+      translateY(var(--y, 0px));
+  }
 }
 
 /* CTA — APPEARS AFTER LOGO */
@@ -201,7 +227,7 @@ body::after {
 
 /* Motion safety */
 @media (prefers-reduced-motion: reduce) {
-  .logo { animation: none; }
+  .slot { animation: none; }
   .glyph {
     animation: none;
     opacity: 1;
