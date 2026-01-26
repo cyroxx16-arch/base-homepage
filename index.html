@@ -5,78 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BASE</title>
 
-    <!-- Cache-bust so Safari/Cloudflare don’t serve old CSS -->
-    <link rel="stylesheet" href="/styles.css?v=20260126-2" />
+    <link rel="stylesheet" href="/styles.css?v=20260126-final3" />
 
-    <!-- Preload (lowercase paths to match your folder) -->
+    <!-- Preload (prevents flash / broken icons) -->
     <link rel="preload" as="image" href="/assets/base/b.png" />
     <link rel="preload" as="image" href="/assets/base/a.png" />
     <link rel="preload" as="image" href="/assets/base/s.png" />
     <link rel="preload" as="image" href="/assets/base/e.png" />
-
-    <!-- Safari compositing stability (safe) -->
-    <style>
-      .logo, .slot, .glyph {
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        will-change: transform, opacity;
-      }
-    </style>
   </head>
 
-  <body>
+  <body class="preload">
     <main class="hero">
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
-          <!-- B -->
-          <div
-            class="slot"
-            style="
-              --delay: 0ms;
-              --x-start: -330px;
-              --x-end: -120px;
-              --y: 6px;
-            "
-          >
-            <img class="glyph" src="/assets/base/b.png" alt="B" />
+          <div class="slot" style="--delay:0ms;   --x0:-330px; --x1:-120px; --y:6px;">
+            <img
+              class="glyph"
+              src="/assets/base/b.png"
+              alt="B"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
 
-          <!-- A -->
-          <div
-            class="slot"
-            style="
-              --delay: 180ms;
-              --x-start: -110px;
-              --x-end: -40px;
-            "
-          >
-            <img class="glyph" src="/assets/base/a.png" alt="A" />
+          <div class="slot" style="--delay:180ms; --x0:-110px; --x1:-40px;">
+            <img
+              class="glyph"
+              src="/assets/base/a.png"
+              alt="a"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
 
-          <!-- S -->
-          <div
-            class="slot"
-            style="
-              --delay: 360ms;
-              --x-start: 110px;
-              --x-end: 40px;
-            "
-          >
-            <img class="glyph" src="/assets/base/s.png" alt="S" />
+          <div class="slot" style="--delay:360ms; --x0:110px;  --x1:40px;">
+            <img
+              class="glyph"
+              src="/assets/base/s.png"
+              alt="S"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
 
-          <!-- E (optical fix: micro loosen + micro size boost) -->
-          <div
-            class="slot"
-            style="
-              --delay: 540ms;
-              --x-start: 318px;
-              --x-end: 108px;
-              --s: 1.065;
-            "
-          >
-            <img class="glyph" src="/assets/base/e.png" alt="E" />
+          <div class="slot" style="--delay:540ms; --x0:318px;  --x1:108px; --s:1.065;">
+            <img
+              class="glyph"
+              src="/assets/base/e.png"
+              alt="E"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
         </div>
 
@@ -84,13 +71,24 @@
       </div>
     </main>
 
-    <!-- Optional: helps Safari if it ever “starts mid-frame” -->
+    <!-- 🔑 Hide glyphs until ALL images are truly loaded -->
     <script>
-      window.addEventListener("load", () => {
-        document.body.classList.remove("replay");
-        void document.body.offsetHeight;
-        document.body.classList.add("replay");
-      });
+      (function () {
+        const images = Array.from(document.querySelectorAll(".glyph"));
+
+        const waitForImg = (img) => {
+          if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+          if (img.decode) return img.decode().catch(() => {});
+          return new Promise((resolve) => {
+            img.onload = img.onerror = resolve;
+          });
+        };
+
+        Promise.all(images.map(waitForImg)).then(() => {
+          document.body.classList.add("ready");
+          document.body.classList.remove("preload");
+        });
+      })();
     </script>
   </body>
 </html>
