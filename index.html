@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BASE</title>
 
-    <!-- ✅ Root-absolute so it works on the real domain from anywhere -->
-    <link rel="stylesheet" href="/styles.css" />
+    <!-- cache-bust -->
+    <link rel="stylesheet" href="/styles.css?v=20260126-4" />
 
-    <!-- ✅ Preload letter images (helps Safari + first render) -->
     <link rel="preload" as="image" href="/assets/base/B.png" />
     <link rel="preload" as="image" href="/assets/base/A.png" />
     <link rel="preload" as="image" href="/assets/base/S.png" />
@@ -20,37 +19,28 @@
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
 
-          <!-- B: slightly lowered to match baseline -->
-          <div class="slot" style="--i:-1.5; --delay:0ms; --k:0px; --y:6px;">
+          <!-- B -->
+          <div class="slot" style="--delay:0ms; --x-start:-330px; --x-end:-120px; --k:0px; --y:6px;">
             <img class="glyph" src="/assets/base/B.png" alt="B" />
           </div>
 
-          <!-- A: neutral -->
-          <div class="slot" style="--i:-0.5; --delay:180ms; --k:0px;">
+          <!-- A -->
+          <div class="slot" style="--delay:180ms; --x-start:-110px; --x-end:-40px; --k:0px; --y:0px;">
             <img class="glyph" src="/assets/base/A.png" alt="A" />
           </div>
 
-          <!-- S: neutral -->
-          <div class="slot" style="--i:0.5; --delay:360ms; --k:0px;">
+          <!-- S -->
+          <div class="slot" style="--delay:360ms; --x-start:110px; --x-end:40px; --k:0px; --y:0px;">
             <img class="glyph" src="/assets/base/S.png" alt="S" />
           </div>
 
-          <!-- E: micro loosen + micro size boost (OPTICAL FIX) -->
-          <div
-            class="slot"
-            style="
-              --i:1.5;
-              --delay:540ms;
-              --k:-12px;
-              --s:1.065;
-            "
-          >
+          <!-- E -->
+          <div class="slot" style="--delay:540ms; --x-start:330px; --x-end:120px; --k:-12px; --y:0px; --s:1.065;">
             <img class="glyph" src="/assets/base/E.png" alt="E" />
           </div>
 
         </div>
 
-        <!-- CTA -->
         <a class="cta" href="/app.html">Get Started</a>
       </div>
     </main>

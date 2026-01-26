@@ -87,9 +87,9 @@ body::after {
   left: 50%;
   top: 50%;
 
-  /* Default (Chrome/Firefox) — gets overridden by animation keyframes too */
+  /* ✅ Default at spacing-start */
   transform:
-    translate(-50%, -50%)
+    translate3d(-50%, -50%, 0)
     translateX(calc((var(--i) * var(--spacing-start)) + var(--k, 0px)))
     translateY(var(--y, 0px));
 
@@ -100,9 +100,7 @@ body::after {
     cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
 
-  /* ✅ Safari stability */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  /* ✅ Safari stability (does NOT override transforms now) */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -114,7 +112,7 @@ body::after {
 
   opacity: 0;
   transform:
-    translateY(60px)
+    translate3d(0, 60px, 0)
     scale(var(--s, 1));
   filter: blur(14px);
 
@@ -125,8 +123,6 @@ body::after {
   will-change: transform, opacity, filter;
 
   /* ✅ Safari stability */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -135,17 +131,17 @@ body::after {
 @keyframes fly-in {
   0% {
     opacity: 0;
-    transform: translateY(70px) scale(var(--s, 1));
+    transform: translate3d(0, 70px, 0) scale(var(--s, 1));
     filter: blur(16px);
   }
   55% {
     opacity: 1;
-    transform: translateY(-8px) scale(calc(var(--s, 1) * 1.02));
+    transform: translate3d(0, -8px, 0) scale(calc(var(--s, 1) * 1.02));
     filter: blur(4px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(var(--s, 1));
+    transform: translate3d(0, 0, 0) scale(var(--s, 1));
     filter: blur(0);
   }
 }
@@ -154,19 +150,19 @@ body::after {
 @keyframes slot-squeeze {
   0% {
     transform:
-      translate(-50%, -50%)
+      translate3d(-50%, -50%, 0)
       translateX(calc((var(--i) * var(--spacing-start)) + var(--k, 0px)))
       translateY(var(--y, 0px));
   }
   70% {
     transform:
-      translate(-50%, -50%)
+      translate3d(-50%, -50%, 0)
       translateX(calc((var(--i) * var(--spacing-end)) + var(--k, 0px)))
       translateY(var(--y, 0px));
   }
   100% {
     transform:
-      translate(-50%, -50%)
+      translate3d(-50%, -50%, 0)
       translateX(calc((var(--i) * var(--spacing-end)) + var(--k, 0px)))
       translateY(var(--y, 0px));
   }
@@ -187,7 +183,7 @@ body::after {
 
   /* start hidden */
   opacity: 0;
-  transform: translateY(6px);
+  transform: translate3d(0, 6px, 0);
 
   animation: cta-in 420ms ease forwards;
   animation-delay: var(--cta-delay);
@@ -221,8 +217,8 @@ body::after {
 
 /* CTA fade-in */
 @keyframes cta-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 0.95; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 6px, 0); }
+  to   { opacity: 0.95; transform: translate3d(0, 0, 0); }
 }
 
 /* Motion safety */
