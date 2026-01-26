@@ -6,33 +6,20 @@
     <title>BASE</title>
 
     <!-- ✅ Root-absolute so it works on the real domain from anywhere -->
-    <!-- ✅ Cache-bust so Safari/Cloudflare don’t serve old CSS -->
-    <link rel="stylesheet" href="/styles.css?v=20260126-1" />
+    <link rel="stylesheet" href="/styles.css" />
 
     <!-- ✅ Preload letter images (helps Safari + first render) -->
     <link rel="preload" as="image" href="/assets/base/B.png" />
     <link rel="preload" as="image" href="/assets/base/A.png" />
     <link rel="preload" as="image" href="/assets/base/S.png" />
     <link rel="preload" as="image" href="/assets/base/E.png" />
-
-    <!-- ✅ Safari compositing stability -->
-    <style>
-      .logo,
-      .slot,
-      .glyph {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        will-change: transform, opacity;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-      }
-    </style>
   </head>
 
   <body>
     <main class="hero">
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
+
           <!-- B: slightly lowered to match baseline -->
           <div class="slot" style="--i:-1.5; --delay:0ms; --k:0px; --y:6px;">
             <img class="glyph" src="/assets/base/B.png" alt="B" />
@@ -49,41 +36,23 @@
           </div>
 
           <!-- E: micro loosen + micro size boost (OPTICAL FIX) -->
-          <div class="slot" style="--i:1.5; --delay:540ms; --k:-12px; --s:1.065;">
+          <div
+            class="slot"
+            style="
+              --i:1.5;
+              --delay:540ms;
+              --k:-12px;
+              --s:1.065;
+            "
+          >
             <img class="glyph" src="/assets/base/E.png" alt="E" />
           </div>
+
         </div>
 
         <!-- CTA -->
         <a class="cta" href="/app.html">Get Started</a>
       </div>
     </main>
-
-    <!-- ✅ Safari FIX: hard-restart CSS animations after load -->
-    <script>
-      function restartAnimations() {
-        const nodes = document.querySelectorAll(".slot, .glyph");
-
-        // stop
-        nodes.forEach((el) => {
-          el.style.webkitAnimation = "none";
-          el.style.animation = "none";
-        });
-
-        // force reflow
-        void document.body.offsetHeight;
-
-        // resume (back to CSS-defined animations)
-        nodes.forEach((el) => {
-          el.style.webkitAnimation = "";
-          el.style.animation = "";
-        });
-      }
-
-      window.addEventListener("load", () => {
-        requestAnimationFrame(() => restartAnimations());
-        setTimeout(restartAnimations, 60);
-      });
-    </script>
   </body>
 </html>
