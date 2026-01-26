@@ -5,22 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BASE</title>
 
-    <!-- ✅ Root-absolute CSS (domain-safe) -->
-    <link rel="stylesheet" href="/styles.css?v=20260126-2" />
+    <!-- ✅ Root-absolute so it works on the real domain from anywhere -->
+    <!-- ✅ Cache-bust so Safari/Cloudflare don’t serve old CSS -->
+    <link rel="stylesheet" href="/styles.css?v=20260126-1" />
 
-    <!-- ✅ Preload glyphs (Safari needs this) -->
+    <!-- ✅ Preload letter images (helps Safari + first render) -->
     <link rel="preload" as="image" href="/assets/base/B.png" />
     <link rel="preload" as="image" href="/assets/base/A.png" />
     <link rel="preload" as="image" href="/assets/base/S.png" />
     <link rel="preload" as="image" href="/assets/base/E.png" />
 
-    <!-- ✅ SAFARI FIX: force compositing + animation start -->
+    <!-- ✅ Safari compositing stability -->
     <style>
+      .logo,
       .slot,
       .glyph {
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
         will-change: transform, opacity;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
       }
     </style>
   </head>
@@ -29,30 +33,25 @@
     <main class="hero">
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
-
-          <!-- B -->
+          <!-- B: slightly lowered to match baseline -->
           <div class="slot" style="--i:-1.5; --delay:0ms; --k:0px; --y:6px;">
             <img class="glyph" src="/assets/base/B.png" alt="B" />
           </div>
 
-          <!-- A -->
+          <!-- A: neutral -->
           <div class="slot" style="--i:-0.5; --delay:180ms; --k:0px;">
             <img class="glyph" src="/assets/base/A.png" alt="A" />
           </div>
 
-          <!-- S -->
+          <!-- S: neutral -->
           <div class="slot" style="--i:0.5; --delay:360ms; --k:0px;">
             <img class="glyph" src="/assets/base/S.png" alt="S" />
           </div>
 
-          <!-- E -->
-          <div
-            class="slot"
-            style="--i:1.5; --delay:540ms; --k:-12px; --s:1.065;"
-          >
+          <!-- E: micro loosen + micro size boost (OPTICAL FIX) -->
+          <div class="slot" style="--i:1.5; --delay:540ms; --k:-12px; --s:1.065;">
             <img class="glyph" src="/assets/base/E.png" alt="E" />
           </div>
-
         </div>
 
         <!-- CTA -->
@@ -60,11 +59,30 @@
       </div>
     </main>
 
-    <!-- ✅ SAFARI NUDGE: triggers animation reliably -->
+    <!-- ✅ Safari FIX: hard-restart CSS animations after load -->
     <script>
-      // Safari sometimes needs a repaint to start animations
-      requestAnimationFrame(() => {
-        document.body.classList.add("ready");
+      function restartAnimations() {
+        const nodes = document.querySelectorAll(".slot, .glyph");
+
+        // stop
+        nodes.forEach((el) => {
+          el.style.webkitAnimation = "none";
+          el.style.animation = "none";
+        });
+
+        // force reflow
+        void document.body.offsetHeight;
+
+        // resume (back to CSS-defined animations)
+        nodes.forEach((el) => {
+          el.style.webkitAnimation = "";
+          el.style.animation = "";
+        });
+      }
+
+      window.addEventListener("load", () => {
+        requestAnimationFrame(() => restartAnimations());
+        setTimeout(restartAnimations, 60);
       });
     </script>
   </body>
