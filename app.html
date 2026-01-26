@@ -5,28 +5,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BASE — Inside</title>
-  <link rel="stylesheet" href="./app.css" />
 
-  <!-- ✅ Cursor preload (matches app.css assets) -->
-  <link rel="preload" as="image" href="./assets/cursors/cursor-base-gold-32.png" />
-  <link rel="preload" as="image" href="./assets/cursors/cursor-base-gold-64.png" />
+  <!-- ✅ Root-absolute so it works from ANY folder on the domain -->
+  <link rel="stylesheet" href="/app.css" />
+
+  <!-- ✅ Cursor preload -->
+  <link rel="preload" as="image" href="/assets/cursors/cursor-base-gold-32.png" />
+  <link rel="preload" as="image" href="/assets/cursors/cursor-base-gold-64.png" />
 </head>
 
 <body>
   <div class="wrap">
     <header class="top">
       <div class="top-inner">
-        <!-- ✅ Brand always returns to the gold antique homepage -->
-        <a class="brand" href="./app.html" aria-label="BASE Home">
+        <!-- ✅ Brand always returns to Inside -->
+        <a class="brand" href="/app.html" aria-label="BASE Home">
           <span class="brand-dot" aria-hidden="true"></span>
           <span class="brand-text">BASE</span>
         </a>
 
-        <!-- ✅ Nav: HOME stays inside / SPLASH returns to smoke page / FAQ goes to faq -->
+        <!-- ✅ Nav -->
         <nav class="nav" aria-label="Primary">
-          <a href="./app.html">HOME</a>
-          <a href="./index.html">SPLASH</a>
-          <a href="./pages/support/faq.html">FAQ</a>
+          <a href="/app.html">HOME</a>
+          <a href="/index.html">SPLASH</a>
+          <a href="/pages/support/faq.html">FAQ</a>
         </nav>
       </div>
     </header>
@@ -37,7 +39,7 @@
           <div class="orn-rule" aria-hidden="true"></div>
 
           <div class="wordmark-wrap" aria-label="BASE">
-            <img class="wordmark" src="./assets/base-wordmark.png" alt="BASE" />
+            <img class="wordmark" src="/assets/base-wordmark.png" alt="BASE" />
           </div>
 
           <div class="subline">
@@ -69,7 +71,7 @@
 
               <!-- ✅ FAQ -->
               <li>
-                <a class="section01-a" href="./pages/support/faq.html">FAQ</a>
+                <a class="section01-a" href="/pages/support/faq.html">FAQ</a>
               </li>
 
               <!-- ✅ REPORT A PROBLEM -->
@@ -93,7 +95,7 @@
             <div class="aura-mark-wrap" aria-hidden="true">
               <img
                 class="aura-mark"
-                src="./assets/aura/aura-mark.png"
+                src="/assets/aura/aura-mark.png"
                 alt="Aura"
                 onerror="this.style.display='none'"
               />
@@ -147,6 +149,7 @@
           target="_blank"
           rel="noopener noreferrer"
           id="downloadBaseBtn"
+          aria-label="Download Base"
         >
           <span class="download-label">DOWNLOAD BASE</span>
         </a>
@@ -161,8 +164,8 @@
       <div class="footer-inner">
         <div class="fine">© <span id="y"></span> BASE</div>
         <div class="links">
-          <a href="./privacy.html">PRIVACY</a>
-          <a href="./terms.html">TERMS</a>
+          <a href="/privacy.html">PRIVACY</a>
+          <a href="/terms.html">TERMS</a>
         </div>
       </div>
     </footer>

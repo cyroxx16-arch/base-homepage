@@ -5,44 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BASE</title>
 
-    <!-- cache-bust -->
-    <link rel="stylesheet" href="/styles.css?v=20260126-4" />
+    <!-- Cache-bust so Safari/Cloudflare don’t serve old CSS -->
+    <link rel="stylesheet" href="/styles.css?v=20260126-2" />
 
-    <link rel="preload" as="image" href="/assets/base/B.png" />
-    <link rel="preload" as="image" href="/assets/base/A.png" />
-    <link rel="preload" as="image" href="/assets/base/S.png" />
-    <link rel="preload" as="image" href="/assets/base/E.png" />
+    <!-- Preload (lowercase paths to match your folder) -->
+    <link rel="preload" as="image" href="/assets/base/b.png" />
+    <link rel="preload" as="image" href="/assets/base/a.png" />
+    <link rel="preload" as="image" href="/assets/base/s.png" />
+    <link rel="preload" as="image" href="/assets/base/e.png" />
+
+    <!-- Safari compositing stability (safe) -->
+    <style>
+      .logo, .slot, .glyph {
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        will-change: transform, opacity;
+      }
+    </style>
   </head>
 
   <body>
     <main class="hero">
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
-
           <!-- B -->
-          <div class="slot" style="--delay:0ms; --x-start:-330px; --x-end:-120px; --k:0px; --y:6px;">
-            <img class="glyph" src="/assets/base/B.png" alt="B" />
+          <div
+            class="slot"
+            style="
+              --delay: 0ms;
+              --x-start: -330px;
+              --x-end: -120px;
+              --y: 6px;
+            "
+          >
+            <img class="glyph" src="/assets/base/b.png" alt="B" />
           </div>
 
           <!-- A -->
-          <div class="slot" style="--delay:180ms; --x-start:-110px; --x-end:-40px; --k:0px; --y:0px;">
-            <img class="glyph" src="/assets/base/A.png" alt="A" />
+          <div
+            class="slot"
+            style="
+              --delay: 180ms;
+              --x-start: -110px;
+              --x-end: -40px;
+            "
+          >
+            <img class="glyph" src="/assets/base/a.png" alt="A" />
           </div>
 
           <!-- S -->
-          <div class="slot" style="--delay:360ms; --x-start:110px; --x-end:40px; --k:0px; --y:0px;">
-            <img class="glyph" src="/assets/base/S.png" alt="S" />
+          <div
+            class="slot"
+            style="
+              --delay: 360ms;
+              --x-start: 110px;
+              --x-end: 40px;
+            "
+          >
+            <img class="glyph" src="/assets/base/s.png" alt="S" />
           </div>
 
-          <!-- E -->
-          <div class="slot" style="--delay:540ms; --x-start:330px; --x-end:120px; --k:-12px; --y:0px; --s:1.065;">
-            <img class="glyph" src="/assets/base/E.png" alt="E" />
+          <!-- E (optical fix: micro loosen + micro size boost) -->
+          <div
+            class="slot"
+            style="
+              --delay: 540ms;
+              --x-start: 318px;
+              --x-end: 108px;
+              --s: 1.065;
+            "
+          >
+            <img class="glyph" src="/assets/base/e.png" alt="E" />
           </div>
-
         </div>
 
         <a class="cta" href="/app.html">Get Started</a>
       </div>
     </main>
+
+    <!-- Optional: helps Safari if it ever “starts mid-frame” -->
+    <script>
+      window.addEventListener("load", () => {
+        document.body.classList.remove("replay");
+        void document.body.offsetHeight;
+        document.body.classList.add("replay");
+      });
+    </script>
   </body>
 </html>

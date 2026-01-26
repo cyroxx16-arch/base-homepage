@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BASE</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    (function(){
+      var ua = navigator.userAgent;
+      var isChrome = /Chrome\//.test(ua) && !/Edg\//.test(ua) && !/OPR\//.test(ua);
+      if(isChrome) document.documentElement.classList.add("is-chrome");
+    })();
+  </script>
+</head>
+<body>
+  <section class="hero">
+    <div class="center-wrap">
+      <div class="brand" aria-label="BASE">
+        <!-- MUCH tighter center squeeze -->
+        <span class="fly" style="--i:0; --sx:48px;  --sy:6px;  --sc:1;">
+          <img src="./assets/B.png" alt="B" />
+        </span>
+        <span class="fly" style="--i:1; --sx:16px;  --sy:0px;  --sc:1;">
+          <img src="./assets/A.png" alt="A" />
+        </span>
+        <span class="fly" style="--i:2; --sx:-16px; --sy:0px;  --sc:1;">
+          <img src="./assets/S.png" alt="S" />
+        </span>
+        <span class="fly" style="--i:3; --sx:-48px; --sy:0px;  --sc:1.05;">
+          <img src="./assets/E.png" alt="E" />
+        </span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

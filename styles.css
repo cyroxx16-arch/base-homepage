@@ -1,7 +1,7 @@
 /* =========================
    BASE HOMEPAGE ANIMATION
-   SAFARI-PROOF (NO @property)
-   FINAL OPTICAL FIX + CTA TIMING
+   SAFARI-PROOF (PIXEL SLOTS)
+   One-by-one fly-in → spread out → squeeze together
    ========================= */
 
 :root {
@@ -9,10 +9,6 @@
   --fly-dur: 950ms;
   --hold-after-fly: 650ms;
   --squeeze-dur: 900ms;
-
-  /* Spacing */
-  --spacing-start: 220px;
-  --spacing-end: 80px;
 
   /* Logo size */
   --logo-height: 88px;
@@ -81,26 +77,24 @@ body::after {
   height: 140px;
 }
 
-/* SLOT (optical offsets) */
+/* SLOT — pixel positioned (Safari-proof) */
 .slot {
   position: absolute;
   left: 50%;
   top: 50%;
 
-  /* ✅ Default at spacing-start */
+  /* ✅ Start spread-out position */
   transform:
     translate3d(-50%, -50%, 0)
-    translateX(calc((var(--i) * var(--spacing-start)) + var(--k, 0px)))
-    translateY(var(--y, 0px));
+    translate3d(var(--x-start, 0px), var(--y, 0px), 0);
 
   will-change: transform;
 
-  /* ✅ SAFARI-PROOF squeeze: animate each slot’s translateX */
+  /* ✅ Squeeze AFTER fly-ins finish */
   animation: slot-squeeze var(--squeeze-dur)
     cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
 
-  /* ✅ Safari stability (does NOT override transforms now) */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -111,18 +105,15 @@ body::after {
   width: auto;
 
   opacity: 0;
-  transform:
-    translate3d(0, 60px, 0)
-    scale(var(--s, 1));
+  transform: translate3d(0, 60px, 0) scale(var(--s, 1));
   filter: blur(14px);
 
+  /* ✅ One-by-one fly-in */
   animation: fly-in var(--fly-dur)
     cubic-bezier(0.2, 0.9, 0.25, 1) forwards;
   animation-delay: var(--delay);
 
   will-change: transform, opacity, filter;
-
-  /* ✅ Safari stability */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -146,25 +137,22 @@ body::after {
   }
 }
 
-/* ✅ Each slot squeezes from spacing-start → spacing-end */
+/* ✅ Spread-out → squeezed position using pixel end values */
 @keyframes slot-squeeze {
   0% {
     transform:
       translate3d(-50%, -50%, 0)
-      translateX(calc((var(--i) * var(--spacing-start)) + var(--k, 0px)))
-      translateY(var(--y, 0px));
+      translate3d(var(--x-start, 0px), var(--y, 0px), 0);
   }
   70% {
     transform:
       translate3d(-50%, -50%, 0)
-      translateX(calc((var(--i) * var(--spacing-end)) + var(--k, 0px)))
-      translateY(var(--y, 0px));
+      translate3d(var(--x-end, 0px), var(--y, 0px), 0);
   }
   100% {
     transform:
       translate3d(-50%, -50%, 0)
-      translateX(calc((var(--i) * var(--spacing-end)) + var(--k, 0px)))
-      translateY(var(--y, 0px));
+      translate3d(var(--x-end, 0px), var(--y, 0px), 0);
   }
 }
 
@@ -181,7 +169,6 @@ body::after {
     0 0 18px rgba(215,179,90,0.25),
     0 0 40px rgba(215,179,90,0.12);
 
-  /* start hidden */
   opacity: 0;
   transform: translate3d(0, 6px, 0);
 
@@ -205,9 +192,7 @@ body::after {
   transition: transform 220ms ease;
 }
 
-.cta:hover::after {
-  transform: scaleX(1);
-}
+.cta:hover::after { transform: scaleX(1); }
 
 .cta:hover {
   text-shadow:
@@ -215,7 +200,6 @@ body::after {
     0 0 60px rgba(215,179,90,0.18);
 }
 
-/* CTA fade-in */
 @keyframes cta-in {
   from { opacity: 0; transform: translate3d(0, 6px, 0); }
   to   { opacity: 0.95; transform: translate3d(0, 0, 0); }
