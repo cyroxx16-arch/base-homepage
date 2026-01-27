@@ -1,225 +1,95 @@
-<!-- app.html -->
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BASE — Inside</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BASE</title>
 
-  <!-- ✅ Root-absolute so it works from ANY folder on the domain -->
-  <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/styles.css?v=20260126-final4" />
 
-  <!-- ✅ Cursor preload -->
-  <link rel="preload" as="image" href="/assets/cursors/cursor-base-gold-32.png" />
-  <link rel="preload" as="image" href="/assets/cursors/cursor-base-gold-64.png" />
-</head>
+    <!-- Preload (prevents flash / broken icons) -->
+    <link rel="preload" as="image" href="/assets/base/b.png" />
+    <link rel="preload" as="image" href="/assets/base/a.png" />
+    <link rel="preload" as="image" href="/assets/base/s.png" />
+    <link rel="preload" as="image" href="/assets/base/e.png" />
+  </head>
 
-<body>
-  <div class="wrap">
-    <header class="top">
-      <div class="top-inner">
-        <!-- ✅ Brand always returns to Inside -->
-        <a class="brand" href="/app.html" aria-label="BASE Home">
-          <span class="brand-dot" aria-hidden="true"></span>
-          <span class="brand-text">BASE</span>
-        </a>
-
-        <!-- ✅ Nav -->
-        <nav class="nav" aria-label="Primary">
-          <a href="/app.html">HOME</a>
-          <a href="/index.html">SPLASH</a>
-          <a href="/pages/support/faq.html">FAQ</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="content">
-      <section class="mast">
-        <div class="mast-inner">
-          <div class="orn-rule" aria-hidden="true"></div>
-
-          <div class="wordmark-wrap" aria-label="BASE">
-            <img class="wordmark" src="/assets/base-wordmark.png" alt="BASE" />
+  <body class="preload">
+    <main class="hero">
+      <div class="hero-inner">
+        <div class="logo" aria-label="BASE">
+          <div class="slot" style="--delay:0ms;   --x0:-330px; --x1:-120px; --y:6px;">
+            <img
+              class="glyph"
+              src="/assets/base/b.png"
+              alt="B"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
 
-          <div class="subline">
-            <span class="gem" aria-hidden="true"></span>
-            <span class="subline-text">WELCOME INSIDE</span>
-            <span class="gem" aria-hidden="true"></span>
+          <div class="slot" style="--delay:180ms; --x0:-110px; --x1:-40px;">
+            <img
+              class="glyph"
+              src="/assets/base/a.png"
+              alt="a"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
 
-          <div class="orn-rule" aria-hidden="true"></div>
-        </div>
-      </section>
+          <div class="slot" style="--delay:360ms; --x0:110px;  --x1:40px;">
+            <img
+              class="glyph"
+              src="/assets/base/s.png"
+              alt="S"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
+          </div>
 
-      <div class="grid">
-        <!-- SECTION 01 — Support Links -->
-        <div class="card card--gold">
-          <div class="card-frame" aria-hidden="true"></div>
-
-          <nav class="section01" aria-label="Support links">
-            <ul class="section01-list">
-              <!-- ✅ CONTACT US -->
-              <li>
-                <a
-                  class="section01-a"
-                  href="mailto:support@baseofficial.net?subject=Base%20Support&body=Hi%20Base%20Support%2C%0A%0A%5BWrite%20your%20message%20here%5D%0A%0A---%0AHelpful%20details%20(optional)%3A%0A%E2%80%A2%20Device%3A%20%0A%E2%80%A2%20OS%20version%3A%20%0A%E2%80%A2%20App%20version%3A%20%0A%E2%80%A2%20Account%20email%20(if%20relevant)%3A%0A%0AThanks%2C%0A"
-                >
-                  CONTACT US
-                </a>
-              </li>
-
-              <!-- ✅ FAQ -->
-              <li>
-                <a class="section01-a" href="/pages/support/faq.html">FAQ</a>
-              </li>
-
-              <!-- ✅ REPORT A PROBLEM -->
-              <li>
-                <a
-                  class="section01-a"
-                  href="mailto:support@baseofficial.net?subject=Base%20Bug%20Report&body=Hi%20Base%20Support%2C%0A%0AProblem%3A%0A%5BShort%20summary%5D%0A%0ASteps%20to%20reproduce%3A%0A1.%20%0A2.%20%0A3.%20%0A%0AExpected%3A%0A%0AActual%3A%0A%0A---%0AHelpful%20details%20(optional)%3A%0A%E2%80%A2%20Device%3A%20%0A%E2%80%A2%20OS%20version%3A%20%0A%E2%80%A2%20App%20version%3A%20%0A%E2%80%A2%20Screenshots%2FScreen%20recording%3A%20%0A%0AThanks%2C%0A"
-                >
-                  REPORT A PROBLEM
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        <!-- 🌑 AURA HERO -->
-        <div class="card card--diamond card--aura" id="auraCard">
-          <div class="card-frame" aria-hidden="true"></div>
-
-          <div class="aura-hero">
-            <div class="aura-mark-wrap" aria-hidden="true">
-              <img
-                class="aura-mark"
-                src="/assets/aura/aura-mark.png"
-                alt="Aura"
-                onerror="this.style.display='none'"
-              />
-            </div>
-
-            <div class="aura-actions">
-              <button class="btn btn--primary" id="auraGetNow" type="button">
-                GET NOW
-              </button>
-              <button class="btn btn--ghost" id="auraLearnMore" type="button">
-                LEARN MORE
-              </button>
-            </div>
-
-            <div class="aura-footnote">
-              Cancel anytime • Restore supported
-            </div>
+          <div class="slot" style="--delay:540ms; --x0:318px;  --x1:108px; --s:1.065;">
+            <img
+              class="glyph"
+              src="/assets/base/e.png"
+              alt="E"
+              width="96"
+              height="96"
+              decoding="async"
+              loading="eager"
+            />
           </div>
         </div>
 
-        <!-- SECTION 03 — Base Platform -->
-        <div class="card card--gold">
-          <div class="card-frame" aria-hidden="true"></div>
-
-          <section class="section03" aria-label="Base platform overview">
-            <div class="section03-eyebrow">BASE</div>
-
-            <p class="section03-copy">
-              Base brings stories, reels, and messaging into a calm, intentional space.
-              <span class="section03-keep">With Aura for those who want more.</span>
-            </p>
-
-            <div class="section03-pills">
-              <span class="section03-pill">STORIES</span>
-              <span class="section03-pill">REELS</span>
-              <span class="section03-pill">MESSAGES</span>
-            </div>
-
-            <div class="section03-foot">
-              Privacy first • Built for scale • Aura ready
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <!-- DOWNLOAD -->
-      <div class="download-wrap" aria-label="Download Base">
-        <a
-          class="download-btn"
-          href="https://baseofficial.net"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="downloadBaseBtn"
-          aria-label="Download Base"
-        >
-          <span class="download-label">DOWNLOAD BASE</span>
-        </a>
-
-        <div class="download-sub">
-          iOS & Android • Coming soon
-        </div>
+        <!-- ✅ IMPORTANT: use /app/ (folder URL) to avoid iOS Safari redirect loops -->
+        <a class="cta" href="/app/">Get Started</a>
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        <div class="fine">© <span id="y"></span> BASE</div>
-        <div class="links">
-          <a href="/privacy.html">PRIVACY</a>
-          <a href="/terms.html">TERMS</a>
-        </div>
-      </div>
-    </footer>
-  </div>
+    <!-- 🔑 Hide glyphs until ALL images are truly loaded -->
+    <script>
+      (function () {
+        const images = Array.from(document.querySelectorAll(".glyph"));
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+        const waitForImg = (img) => {
+          if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+          if (img.decode) return img.decode().catch(() => {});
+          return new Promise((resolve) => {
+            img.onload = img.onerror = resolve;
+          });
+        };
 
-    // ✅ Modal wiring (null-safe)
-    const modal = document.getElementById("auraModal");
-    const learnMore = document.getElementById("auraLearnMore");
-    const closeBtn = document.getElementById("auraClose");
-    const getNow = document.getElementById("auraGetNow");
-    const modalGet = document.getElementById("auraModalGet");
-
-    function openModal() {
-      if (!modal) return;
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-    }
-
-    function closeModal() {
-      if (!modal) return;
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-    }
-
-    if (learnMore) learnMore.addEventListener("click", openModal);
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target && e.target.dataset && e.target.dataset.close) closeModal();
-      });
-    }
-
-    // ✅ AURA buttons (placeholder)
-    if (getNow) {
-      getNow.addEventListener("click", () =>
-        alert("GET NOW → wire to paywall next")
-      );
-    }
-
-    if (modalGet) {
-      modalGet.addEventListener("click", () =>
-        alert("GET AURA → wire to paywall next")
-      );
-    }
-
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal && modal.classList.contains("is-open")) {
-        closeModal();
-      }
-    });
-  </script>
-</body>
+        Promise.all(images.map(waitForImg)).then(() => {
+          document.body.classList.add("ready");
+          document.body.classList.remove("preload");
+        });
+      })();
+    </script>
+  </body>
 </html>
