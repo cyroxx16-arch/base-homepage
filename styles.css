@@ -5,6 +5,7 @@
    - Then squeeze
    - No broken-image flash
    - Phone-safe spread (clamped so it never goes off-screen)
+   - CTA works as <a> OR <button> (no visual change)
    ========================= */
 
 :root {
@@ -15,7 +16,7 @@
   /* Desktop default (overridden responsively below) */
   --logo-height: 88px;
 
-  /* Used to clamp how far letters can spread on small screens */
+  /* Safe max spread distance */
   --x-max: clamp(110px, 38vw, 330px);
 
   --cta-delay: calc(
@@ -104,11 +105,11 @@ body::after {
   transform:translate3d(0,60px,0) scale(var(--s,1));
   filter:blur(14px);
 
-  /* ✅ Prevent Chrome showing broken-image icons for a moment */
+  /* ✅ Prevent Chrome broken-image icons flash */
   visibility: hidden;
 }
 
-/* ✅ Only allow glyphs to be painted once they are loaded/decoded */
+/* ✅ Only paint glyphs once loaded/decoded */
 body.ready .glyph {
   visibility: visible;
 }
@@ -132,8 +133,9 @@ body.ready .glyph {
   animation-delay: calc(540ms + var(--fly-dur) + var(--hold-after-fly));
 }
 
-/* CTA */
-.cta {
+/* CTA (works for <a class="cta"> OR <button class="cta">) */
+.cta,
+button.cta {
   margin-top:22px;
   font-size:17px;
   letter-spacing:.18em;
@@ -144,7 +146,19 @@ body.ready .glyph {
   transform:translateY(6px);
   animation: cta-in .42s ease forwards;
   animation-delay: var(--cta-delay);
+
+  /* ✅ button reset (keeps same visual) */
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
 }
+
+/* Optional: nicer tap highlight */
+button.cta { -webkit-tap-highlight-color: transparent; }
 
 /* Keyframes */
 @keyframes fly-in {
@@ -188,7 +202,8 @@ body.ready .glyph {
     max-width: min(360px, 92vw);
   }
 
-  .cta{
+  .cta,
+  button.cta{
     margin-top: 18px;
     font-size: 14px;
     letter-spacing: .16em;
