@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050507" />
     <title>BASE</title>
 
     <link rel="stylesheet" href="/styles.css?v=20260126-final4" />
@@ -19,60 +20,27 @@
       <div class="hero-inner">
         <div class="logo" aria-label="BASE">
           <div class="slot" style="--delay:0ms;   --x0:-330px; --x1:-120px; --y:6px;">
-            <img
-              class="glyph"
-              src="/assets/base/b.png"
-              alt="B"
-              width="96"
-              height="96"
-              decoding="async"
-              loading="eager"
-            />
+            <img class="glyph" src="/assets/base/b.png" alt="B" width="96" height="96" decoding="async" loading="eager" />
           </div>
 
           <div class="slot" style="--delay:180ms; --x0:-110px; --x1:-40px;">
-            <img
-              class="glyph"
-              src="/assets/base/a.png"
-              alt="a"
-              width="96"
-              height="96"
-              decoding="async"
-              loading="eager"
-            />
+            <img class="glyph" src="/assets/base/a.png" alt="A" width="96" height="96" decoding="async" loading="eager" />
           </div>
 
           <div class="slot" style="--delay:360ms; --x0:110px;  --x1:40px;">
-            <img
-              class="glyph"
-              src="/assets/base/s.png"
-              alt="S"
-              width="96"
-              height="96"
-              decoding="async"
-              loading="eager"
-            />
+            <img class="glyph" src="/assets/base/s.png" alt="S" width="96" height="96" decoding="async" loading="eager" />
           </div>
 
           <div class="slot" style="--delay:540ms; --x0:318px;  --x1:108px; --s:1.065;">
-            <img
-              class="glyph"
-              src="/assets/base/e.png"
-              alt="E"
-              width="96"
-              height="96"
-              decoding="async"
-              loading="eager"
-            />
+            <img class="glyph" src="/assets/base/e.png" alt="E" width="96" height="96" decoding="async" loading="eager" />
           </div>
         </div>
 
-        <!-- ✅ IMPORTANT: use /app/ (folder URL) to avoid iOS Safari redirect loops -->
+        <!-- ✅ IMPORTANT: use /app/ (folder URL) -->
         <a class="cta" href="/app/">Get Started</a>
       </div>
     </main>
 
-    <!-- 🔑 Hide glyphs until ALL images are truly loaded -->
     <script>
       (function () {
         const images = Array.from(document.querySelectorAll(".glyph"));
