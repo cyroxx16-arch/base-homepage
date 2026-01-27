@@ -16,13 +16,11 @@
   <div class="wrap">
     <header class="top">
       <div class="top-inner">
-        <!-- ✅ Brand always returns to the gold antique homepage -->
         <a class="brand" href="/app/" aria-label="BASE Home">
           <span class="brand-dot" aria-hidden="true"></span>
           <span class="brand-text">BASE</span>
         </a>
 
-        <!-- ✅ Nav: HOME stays inside / SPLASH returns to smoke page / FAQ goes to faq -->
         <nav class="nav" aria-label="Primary">
           <a href="/app/">HOME</a>
           <a href="/">SPLASH</a>
@@ -57,27 +55,20 @@
 
           <nav class="section01" aria-label="Support links">
             <ul class="section01-list">
-              <!-- ✅ CONTACT US -->
               <li>
-                <a
-                  class="section01-a"
-                  href="mailto:support@baseofficial.net?subject=Base%20Support&body=Hi%20Base%20Support%2C%0A%0A%5BWrite%20your%20message%20here%5D%0A%0A---%0AHelpful%20details%20(optional)%3A%0A%E2%80%A2%20Device%3A%20%0A%E2%80%A2%20OS%20version%3A%20%0A%E2%80%A2%20App%20version%3A%20%0A%E2%80%A2%20Account%20email%20(if%20relevant)%3A%0A%0AThanks%2C%0A"
-                >
+                <a class="section01-a"
+                   href="mailto:support@baseofficial.net?subject=Base%20Support">
                   CONTACT US
                 </a>
               </li>
 
-              <!-- ✅ FAQ -->
               <li>
                 <a class="section01-a" href="/pages/support/faq.html">FAQ</a>
               </li>
 
-              <!-- ✅ REPORT A PROBLEM -->
               <li>
-                <a
-                  class="section01-a"
-                  href="mailto:support@baseofficial.net?subject=Base%20Bug%20Report&body=Hi%20Base%20Support%2C%0A%0AProblem%3A%0A%5BShort%20summary%5D%0A%0ASteps%20to%20reproduce%3A%0A1.%20%0A2.%20%0A3.%20%0A%0AExpected%3A%0A%0AActual%3A%0A%0A---%0AHelpful%20details%20(optional)%3A%0A%E2%80%A2%20Device%3A%20%0A%E2%80%A2%20OS%20version%3A%20%0A%E2%80%A2%20App%20version%3A%20%0A%E2%80%A2%20Screenshots%2FScreen%20recording%3A%20%0A%0AThanks%2C%0A"
-                >
+                <a class="section01-a"
+                   href="mailto:support@baseofficial.net?subject=Base%20Bug%20Report">
                   REPORT A PROBLEM
                 </a>
               </li>
@@ -85,8 +76,8 @@
           </nav>
         </div>
 
-        <!-- 🌑 AURA HERO -->
-        <div class="card card--diamond card--aura" id="auraCard">
+        <!-- 🌑 AURA HERO (homepage only, no text block) -->
+        <div class="card card--diamond card--aura">
           <div class="card-frame" aria-hidden="true"></div>
 
           <div class="aura-hero">
@@ -99,7 +90,6 @@
               />
             </div>
 
-            <!-- ✅ Only Learn More (no Get Now) -->
             <div class="aura-actions">
               <button class="btn btn--ghost" id="auraLearnMore" type="button">
                 LEARN MORE
@@ -107,7 +97,7 @@
             </div>
 
             <div class="aura-footnote">
-              Aura is available inside the Base app
+              Available inside the Base app
             </div>
           </div>
         </div>
@@ -137,40 +127,6 @@
         </div>
       </div>
 
-      <!-- ✅ AURA LEARN MORE SECTION (info only) -->
-      <section class="aura-more" id="aura" aria-label="Aura details">
-        <div class="aura-more-inner">
-          <div class="orn-rule" aria-hidden="true"></div>
-
-          <h2 class="aura-more-title">AURA</h2>
-          <p class="aura-more-sub">
-            A premium layer of polish — designed for presence, privacy, and power.
-          </p>
-
-          <ul class="aura-more-perks" aria-label="Aura perks">
-            <li>Exclusive Aura profile styling & badge</li>
-            <li>Advanced customization & themes</li>
-            <li>Priority features & early access drops</li>
-            <li>Enhanced privacy controls</li>
-          </ul>
-
-          <div class="aura-more-how">
-            <h3 class="aura-more-how-title">How to enable Aura</h3>
-            <ol class="aura-more-steps">
-              <li>Open the <strong>Base</strong> app</li>
-              <li>Go to your <strong>Profile</strong></li>
-              <li>Tap <strong>Aura</strong></li>
-              <li>Choose Monthly or Yearly and follow the prompts</li>
-            </ol>
-            <p class="aura-more-note">
-              Already subscribed? Just sign in — Aura activates automatically.
-            </p>
-          </div>
-
-          <div class="orn-rule" aria-hidden="true"></div>
-        </div>
-      </section>
-
       <!-- DOWNLOAD -->
       <div class="download-wrap" aria-label="Download Base">
         <a
@@ -178,7 +134,6 @@
           href="https://baseofficial.net"
           target="_blank"
           rel="noopener noreferrer"
-          id="downloadBaseBtn"
         >
           <span class="download-label">DOWNLOAD BASE</span>
         </a>
@@ -193,8 +148,8 @@
       <div class="footer-inner">
         <div class="fine">© <span id="y"></span> BASE</div>
         <div class="links">
-          <a href="./privacy.html">PRIVACY</a>
-          <a href="./terms.html">TERMS</a>
+          <a href="/privacy.html">PRIVACY</a>
+          <a href="/terms.html">TERMS</a>
         </div>
       </div>
     </footer>
@@ -203,13 +158,11 @@
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // ✅ Smooth scroll to Aura section
+    // ✅ Learn More → Aura page
     const learnMore = document.getElementById("auraLearnMore");
-    const auraSection = document.getElementById("aura");
-
-    if (learnMore && auraSection) {
+    if (learnMore) {
       learnMore.addEventListener("click", () => {
-        auraSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.location.href = "/pages/aura/";
       });
     }
   </script>
