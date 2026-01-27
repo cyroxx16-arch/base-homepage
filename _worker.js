@@ -2,24 +2,19 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // ✅ Normalize any weird trailing slash on html
-    if (url.pathname.endsWith(".html/")) {
-      url.pathname = url.pathname.slice(0, -1);
+    // ✅ If anyone hits the old file URL, send them to the safe folder URL
+    if (url.pathname === "/app.html" || url.pathname === "/app.html/") {
+      url.pathname = "/app/";
       return Response.redirect(url.toString(), 301);
     }
 
-    // ✅ Force clean app route to the real file
-    if (url.pathname === "/app" || url.pathname === "/app/") {
-      url.pathname = "/app.html";
+    // ✅ Optional: normalize /app to /app/ (nice and consistent)
+    if (url.pathname === "/app") {
+      url.pathname = "/app/";
       return Response.redirect(url.toString(), 301);
     }
 
-    // ✅ IMPORTANT: keep /app.html from being "cleaned" to /app (avoids 308 loops on iOS)
-    if (url.pathname === "/app.html") {
-      // Serve the file directly
-      return env.ASSETS.fetch(request);
-    }
-
+    // ✅ Serve static site normally
     return env.ASSETS.fetch(request);
   },
 };
