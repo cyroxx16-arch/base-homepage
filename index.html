@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#050507" />
     <title>BASE</title>
 
-    <link rel="stylesheet" href="/styles.css?v=20260126-final4" />
+    <link rel="stylesheet" href="/styles.css?v=20260126-final6" />
 
     <!-- Preload (prevents flash / broken icons) -->
     <link rel="preload" as="image" href="/assets/base/b.png" />
@@ -36,8 +36,8 @@
           </div>
         </div>
 
-        <!-- ✅ IMPORTANT: use /app/ (folder URL) -->
-        <a class="cta" href="/app/">Get Started</a>
+        <!-- ✅ Safari-safe: real navigation to ornate home (/app/) -->
+        <button class="cta" type="button" id="goApp">Get Started</button>
       </div>
     </main>
 
@@ -57,6 +57,23 @@
           document.body.classList.add("ready");
           document.body.classList.remove("preload");
         });
+
+        // ✅ Prevent Safari weird “reload same doc” / double-tap issues
+        const btn = document.getElementById("goApp");
+        let navigating = false;
+
+        if (btn) {
+          btn.addEventListener("click", () => {
+            if (navigating) return;
+            navigating = true;
+
+            // visual tiny feedback (no style change, just disables re-click)
+            btn.setAttribute("disabled", "disabled");
+
+            // hard navigate to ornate home
+            window.location.href = "/app/";
+          });
+        }
       })();
     </script>
   </body>
