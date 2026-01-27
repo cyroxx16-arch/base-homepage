@@ -1,4 +1,4 @@
-<!-- app.html -->
+<!-- app/index.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -99,17 +99,15 @@
               />
             </div>
 
+            <!-- ✅ Only Learn More (no Get Now) -->
             <div class="aura-actions">
-              <button class="btn btn--primary" id="auraGetNow" type="button">
-                GET NOW
-              </button>
               <button class="btn btn--ghost" id="auraLearnMore" type="button">
                 LEARN MORE
               </button>
             </div>
 
             <div class="aura-footnote">
-              Cancel anytime • Restore supported
+              Aura is available inside the Base app
             </div>
           </div>
         </div>
@@ -138,6 +136,40 @@
           </section>
         </div>
       </div>
+
+      <!-- ✅ AURA LEARN MORE SECTION (info only) -->
+      <section class="aura-more" id="aura" aria-label="Aura details">
+        <div class="aura-more-inner">
+          <div class="orn-rule" aria-hidden="true"></div>
+
+          <h2 class="aura-more-title">AURA</h2>
+          <p class="aura-more-sub">
+            A premium layer of polish — designed for presence, privacy, and power.
+          </p>
+
+          <ul class="aura-more-perks" aria-label="Aura perks">
+            <li>Exclusive Aura profile styling & badge</li>
+            <li>Advanced customization & themes</li>
+            <li>Priority features & early access drops</li>
+            <li>Enhanced privacy controls</li>
+          </ul>
+
+          <div class="aura-more-how">
+            <h3 class="aura-more-how-title">How to enable Aura</h3>
+            <ol class="aura-more-steps">
+              <li>Open the <strong>Base</strong> app</li>
+              <li>Go to your <strong>Profile</strong></li>
+              <li>Tap <strong>Aura</strong></li>
+              <li>Choose Monthly or Yearly and follow the prompts</li>
+            </ol>
+            <p class="aura-more-note">
+              Already subscribed? Just sign in — Aura activates automatically.
+            </p>
+          </div>
+
+          <div class="orn-rule" aria-hidden="true"></div>
+        </div>
+      </section>
 
       <!-- DOWNLOAD -->
       <div class="download-wrap" aria-label="Download Base">
@@ -171,52 +203,15 @@
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // ✅ Modal wiring (null-safe)
-    const modal = document.getElementById("auraModal");
+    // ✅ Smooth scroll to Aura section
     const learnMore = document.getElementById("auraLearnMore");
-    const closeBtn = document.getElementById("auraClose");
-    const getNow = document.getElementById("auraGetNow");
-    const modalGet = document.getElementById("auraModalGet");
+    const auraSection = document.getElementById("aura");
 
-    function openModal() {
-      if (!modal) return;
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-    }
-
-    function closeModal() {
-      if (!modal) return;
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-    }
-
-    if (learnMore) learnMore.addEventListener("click", openModal);
-    if (closeBtn) closeBtn.addEventListener("click", closeModal);
-
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target && e.target.dataset && e.target.dataset.close) closeModal();
+    if (learnMore && auraSection) {
+      learnMore.addEventListener("click", () => {
+        auraSection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
-
-    // ✅ AURA buttons (placeholder)
-    if (getNow) {
-      getNow.addEventListener("click", () =>
-        alert("GET NOW → wire to paywall next")
-      );
-    }
-
-    if (modalGet) {
-      modalGet.addEventListener("click", () =>
-        alert("GET AURA → wire to paywall next")
-      );
-    }
-
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal && modal.classList.contains("is-open")) {
-        closeModal();
-      }
-    });
   </script>
 </body>
 </html>
