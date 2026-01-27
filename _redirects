@@ -1,2 +1,2 @@
 /assets/*  /assets/:splat  200
-
+/app       /app/          301
