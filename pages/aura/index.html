@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BASE — Inside</title>
+
+  <link rel="stylesheet" href="/app.css" />
+
+  <!-- Cursor preload -->
+  <link rel="preload" as="image" href="/assets/cursors/cursor-base-gold-32.png" />
+  <link rel="preload" as="image" href="/assets/cursors/cursor-base-gold-64.png" />
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- ================= HEADER ================= -->
+    <header class="top">
+      <div class="top-inner">
+        <a class="brand" href="/app/" aria-label="BASE Home">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span class="brand-text">BASE</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="/app/">HOME</a>
+          <a href="/">SPLASH</a>
+          <a href="/pages/support/faq.html">FAQ</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main class="content">
+
+      <!-- Mast -->
+      <section class="mast">
+        <div class="mast-inner">
+          <div class="orn-rule" aria-hidden="true"></div>
+
+          <div class="wordmark-wrap" aria-label="BASE">
+            <img
+              class="wordmark"
+              src="/assets/base-wordmark.png"
+              alt="BASE"
+            />
+          </div>
+
+          <div class="subline">
+            <span class="gem" aria-hidden="true"></span>
+            <span class="subline-text">WELCOME INSIDE</span>
+            <span class="gem" aria-hidden="true"></span>
+          </div>
+
+          <div class="orn-rule" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- Cards grid -->
+      <div class="grid">
+
+        <!-- SUPPORT -->
+        <div class="card card--gold">
+          <div class="card-frame" aria-hidden="true"></div>
+
+          <nav class="section01" aria-label="Support links">
+            <ul class="section01-list">
+              <li>
+                <a class="section01-a"
+                   href="mailto:support@baseofficial.net?subject=Base%20Support">
+                  CONTACT US
+                </a>
+              </li>
+
+              <li>
+                <a class="section01-a" href="/pages/support/faq.html">
+                  FAQ
+                </a>
+              </li>
+
+              <li>
+                <a class="section01-a"
+                   href="mailto:support@baseofficial.net?subject=Base%20Bug%20Report">
+                  REPORT A PROBLEM
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- AURA HERO -->
+        <div class="card card--diamond card--aura">
+          <div class="card-frame" aria-hidden="true"></div>
+
+          <div class="aura-hero">
+            <div class="aura-mark-wrap" aria-hidden="true">
+              <img
+                class="aura-mark"
+                src="/assets/aura/aura-mark.png"
+                alt="Aura"
+                onerror="this.style.display='none'"
+              />
+            </div>
+
+            <div class="aura-actions">
+              <a class="btn btn--ghost" href="/pages/aura/">
+                LEARN MORE
+              </a>
+            </div>
+
+            <div class="aura-footnote">
+              Available inside the Base app
+            </div>
+          </div>
+        </div>
+
+        <!-- BASE PLATFORM -->
+        <div class="card card--gold">
+          <div class="card-frame" aria-hidden="true"></div>
+
+          <section class="section03" aria-label="Base platform overview">
+            <div class="section03-eyebrow">BASE</div>
+
+            <p class="section03-copy">
+              Base brings stories, reels, and messaging into a calm, intentional space.
+              <span class="section03-keep">With Aura for those who want more.</span>
+            </p>
+
+            <div class="section03-pills">
+              <span class="section03-pill">STORIES</span>
+              <span class="section03-pill">REELS</span>
+              <span class="section03-pill">MESSAGES</span>
+            </div>
+
+            <div class="section03-foot">
+              Privacy first • Built for scale • Aura ready
+            </div>
+          </section>
+        </div>
+
+      </div>
+
+      <!-- DOWNLOAD -->
+      <div class="download-wrap" aria-label="Download Base">
+        <a
+          class="download-btn"
+          href="https://baseofficial.net"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="download-label">DOWNLOAD BASE</span>
+        </a>
+
+        <div class="download-sub">
+          iOS & Android • Coming soon
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="fine">© <span id="y"></span> BASE</div>
+
+        <div class="links">
+          <a href="/privacy.html">PRIVACY</a>
+          <a href="/terms.html">TERMS</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById("y").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+</html>
