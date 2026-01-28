@@ -91,7 +91,8 @@
             </div>
 
             <div class="aura-actions">
-              <a class="btn btn--ghost" id="auraLearnMore" href="/pages/aura/">
+              <!-- ✅ FIX: point to the real file -->
+              <a class="btn btn--ghost" id="auraLearnMore" href="/pages/aura/index.html">
                 LEARN MORE
               </a>
             </div>
@@ -157,14 +158,6 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
-
-    // ✅ Learn More → Aura page
-    const learnMore = document.getElementById("auraLearnMore");
-    if (learnMore) {
-      learnMore.addEventListener("click", () => {
-        window.location.href = "/pages/aura/";
-      });
-    }
   </script>
 </body>
 </html>
