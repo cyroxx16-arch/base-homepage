@@ -1,17 +1,14 @@
-# ===============================
-# Allow real folders to load
-# ===============================
-
-/pages/aura/*        /pages/aura/:splat        200
-/pages/support/*     /pages/support/:splat     200
+# ----------------------------
+# Allow folders + assets
+# ----------------------------
 /assets/*            /assets/:splat            200
+/pages/*             /pages/:splat             200
 
-# Optional clean short Aura URL
+# Optional short URL
 /aura                /pages/aura/              301
 
-# ===============================
-# App homepage catch-all (LAST)
-# ===============================
-
+# ----------------------------
+# SPA behavior ONLY for /app
+# (keeps /pages/* working)
+# ----------------------------
 /app/*               /app/                     200
-/*                   /app/                     200
