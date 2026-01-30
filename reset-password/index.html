@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reset password • Base</title>
+  </head>
+
+  <body style="margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#070507; color:rgba(245,242,238,.92);">
+    <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px;">
+      <div style="width:100%; max-width:440px; text-align:center;">
+        <div style="font-size:18px; font-weight:900; letter-spacing:.08em;">BASE</div>
+        <div id="status" style="margin-top:12px; font-size:13px; font-weight:800; opacity:.9;">
+          Loading…
+        </div>
+
+        <div id="panel" style="display:none; margin-top:18px; text-align:left; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:14px;">
+          <label style="display:block; font-size:12px; font-weight:800; opacity:.8;">New password</label>
+          <input id="pw1" type="password" autocomplete="new-password"
+            style="margin-top:8px; width:100%; box-sizing:border-box; padding:12px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.35); color:rgba(245,242,238,.92); outline:none;" />
+
+          <label style="display:block; margin-top:12px; font-size:12px; font-weight:800; opacity:.8;">Confirm password</label>
+          <input id="pw2" type="password" autocomplete="new-password"
+            style="margin-top:8px; width:100%; box-sizing:border-box; padding:12px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.35); color:rgba(245,242,238,.92); outline:none;" />
+
+          <button id="submit"
+            style="margin-top:14px; width:100%; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.10); color:rgba(245,242,238,.92); font-weight:900; font-size:13px;">
+            Update password
+          </button>
+
+          <div id="err" style="display:none; margin-top:10px; font-size:12px; font-weight:800; color:#ff4d6d; line-height:1.35;"></div>
+          <div id="ok" style="display:none; margin-top:10px; font-size:12px; font-weight:800; color:rgba(180,255,220,.95); line-height:1.35;"></div>
+        </div>
+
+        <div style="margin-top:16px; font-size:11px; font-weight:700; opacity:.6; line-height:1.45;">
+          After updating your password, return to the Base app and sign in with the new password.
+        </div>
+      </div>
+    </div>
+
+    <!-- Supabase JS (browser) -->
+    <script type="module">
+      import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+      // 🔐 IMPORTANT: put your PUBLIC values here (same as EXPO_PUBLIC ones)
+      const SUPABASE_URL = "https://ifrrhkhyqeabwynkewhj.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcnJoa2h5cWVhYnd5bmtld2hqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MzYzOTksImV4cCI6MjA3NTUxMjM5OX0.zVxbY7ifaUcHrzb_xSawGYAmQGWVh3M4c9wToXrfMl0";
+
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const statusEl = document.getElementById("status");
+      const panelEl = document.getElementById("panel");
+      const errEl = document.getElementById("err");
+      const okEl = document.getElementById("ok");
+
+      function showErr(msg) {
+        errEl.style.display = "block";
+        errEl.textContent = msg;
+        okEl.style.display = "none";
+      }
+
+      function showOk(msg) {
+        okEl.style.display = "block";
+        okEl.textContent = msg;
+        errEl.style.display = "none";
+      }
+
+      function getParam(name) {
+        const u = new URL(window.location.href);
+        const hash = new URLSearchParams((u.hash || "").replace(/^#/, ""));
+        const q = u.searchParams;
+        return hash.get(name) || q.get(name);
+      }
+
+      async function bootstrapSession() {
+        // Newer Supabase: `code=...`
+        const code = getParam("code");
+
+        // Older recovery flow: access/refresh tokens
+        const access_token = getParam("access_token");
+        const refresh_token = getParam("refresh_token");
+
+        if (code) {
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) throw error;
+          return data?.session ?? null;
+        }
+
+        if (access_token && refresh_token) {
+          const { data, error } = await supabase.auth.setSession({ access_token, refresh_token });
+          if (error) throw error;
+          return data?.session ?? null;
+        }
+
+        throw new Error("Missing reset token in the link. Please request a new password reset email.");
+      }
+
+      try {
+        statusEl.textContent = "Verifying your reset link…";
+        await bootstrapSession();
+
+        statusEl.textContent = "Set a new password";
+        panelEl.style.display = "block";
+      } catch (e) {
+        statusEl.textContent = "This reset link is not valid.";
+        panelEl.style.display = "none";
+        showErr(e?.message || "Please request a new reset email.");
+      }
+
+      document.getElementById("submit").addEventListener("click", async () => {
+        errEl.style.display = "none";
+        okEl.style.display = "none";
+
+        const pw1 = document.getElementById("pw1").value.trim();
+        const pw2 = document.getElementById("pw2").value.trim();
+
+        if (!pw1 || pw1.length < 8) return showErr("Password must be at least 8 characters.");
+        if (pw1 !== pw2) return showErr("Passwords do not match.");
+
+        statusEl.textContent = "Updating password…";
+
+        const { error } = await supabase.auth.updateUser({ password: pw1 });
+        if (error) {
+          statusEl.textContent = "Set a new password";
+          return showErr(error.message || "Could not update password.");
+        }
+
+        statusEl.textContent = "Password updated ✅";
+        showOk("Success! You can close this page and sign in on the Base app with your new password.");
+      });
+    </script>
+  </body>
+</html>
