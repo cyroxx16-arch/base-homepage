@@ -4,64 +4,117 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Reset password • Base</title>
+    <meta name="color-scheme" content="dark" />
   </head>
 
-  <body style="margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#070507; color:rgba(245,242,238,.92);">
-    <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px; text-align:center;">
-      <div style="max-width:420px; width:100%;">
-        <div style="font-size:18px; font-weight:900; letter-spacing:.08em;">BASE</div>
+  <body
+    style="
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: #070507;
+      color: rgba(245, 242, 238, 0.92);
+    "
+  >
+    <div
+      style="
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 18px;
+        text-align: center;
+      "
+    >
+      <div style="max-width: 420px; width: 100%;">
+        <div style="font-size:18px; font-weight:900; letter-spacing:.10em;">
+          BASE
+        </div>
 
-        <div id="title" style="margin-top:12px; font-size:13px; font-weight:800; opacity:.9;">
+        <div
+          id="title"
+          style="margin-top:12px; font-size:13px; font-weight:900; opacity:.92;"
+        >
           Reset your password
         </div>
 
-        <div id="sub" style="margin-top:14px; font-size:12px; font-weight:700; opacity:.72; line-height:1.45;">
+        <div
+          id="sub"
+          style="margin-top:14px; font-size:12px; font-weight:800; opacity:.72; line-height:1.45;"
+        >
           Continue below to finish resetting your password.
         </div>
 
-        <!-- Primary action (WEB SAFE) -->
+        <!-- PRIMARY (REAL APP SAFE) -->
         <a
           id="continueWeb"
           href="#"
-          style="display:inline-block; margin-top:18px; padding:12px 16px; border-radius:14px; background:#fff; color:#070507; text-decoration:none; font-weight:900; font-size:13px;"
+          style="
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 16px;
+            border-radius:14px;
+            background:#ffffff;
+            color:#070507;
+            text-decoration:none;
+            font-weight:950;
+            font-size:13px;
+          "
         >
           Continue resetting password
         </a>
 
-        <!-- Optional app button (for later real builds) -->
+        <!-- OPTIONAL (REAL BUILDS ONLY, SAFE TO SHOW) -->
         <div style="margin-top:14px;">
           <a
             id="openApp"
             href="#"
-            style="display:inline-block; padding:10px 14px; border-radius:14px; background:rgba(255,255,255,.10); color:rgba(245,242,238,.92); text-decoration:none; font-weight:800; font-size:12px; border:1px solid rgba(255,255,255,.14);"
+            style="
+              display:inline-block;
+              padding:10px 14px;
+              border-radius:14px;
+              background:rgba(255,255,255,.10);
+              color:rgba(245,242,238,.92);
+              text-decoration:none;
+              font-weight:900;
+              font-size:12px;
+              border:1px solid rgba(255,255,255,.14);
+            "
           >
             Open Base app
           </a>
         </div>
 
-        <div style="margin-top:18px; font-size:11px; font-weight:700; opacity:.60; line-height:1.4;">
-          If the app is not installed, continue in the browser.
+        <div
+          style="
+            margin-top:18px;
+            font-size:11px;
+            font-weight:800;
+            opacity:.60;
+            line-height:1.4;
+          "
+        >
+          If the app isn’t installed, continue in your browser.
         </div>
       </div>
     </div>
 
     <script>
-      // Preserve ALL Supabase recovery params
+      // Preserve ALL Supabase recovery params exactly as sent
       const url = new URL(window.location.href);
       const hash = url.hash || "";
       const search = url.search || "";
 
-      // 1️⃣ Web reset flow (SAFE for Expo Go + iOS)
-      // This keeps tokens so the next page can finish the reset
-      const webContinueUrl = "/reset-password" + hash + search;
+      // ✅ Web-first reset (this is what real apps do for safety)
+      // This page should contain the actual "new password" form
+      const webResetUrl = "/reset-password" + search + hash;
 
-      // 2️⃣ Native deep link (ONLY works in real builds, not Expo Go)
-      const appUrl = "base://reset" + hash + search;
+      // ✅ Native deep link (ONLY works in real builds, not Expo Go)
+      const appUrl = "base://reset" + search + hash;
 
-      document.getElementById("continueWeb").href = webContinueUrl;
+      document.getElementById("continueWeb").href = webResetUrl;
       document.getElementById("openApp").href = appUrl;
 
-      // Gentle warning if tokens are missing
+      // Gentle UX guard
       if (!hash && !search) {
         document.getElementById("sub").textContent =
           "We couldn’t detect reset tokens. Please open the reset link directly from your email.";
